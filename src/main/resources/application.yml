@@ -28,7 +28,7 @@ jwt:
 
 ###################  项目启动端口  ###################
 server:
-  port: 8088
+  port: 8080
 
 ###################  beetl配置  ###################
 beetl:
@@ -99,18 +99,13 @@ am:
 spring:
   profiles: dev
   datasource:
-      url: jdbc:mysql://192.168.2.153/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://ok.zele.pro/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
       username: root
       password: root
       filters: log4j,wall,mergeStat
       initialize: true
       schema: classpath*:sql/*-schema.sql
       data: classpath*:sql/*-data.sql
-  #rabbitmq:
-   #   host: 112.74.26.228
-    #  port: 5672
-     # username: jfeat
-      #password: jfeat
 
 logging:
   level: debug
