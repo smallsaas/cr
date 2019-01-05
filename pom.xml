@@ -22,6 +22,8 @@
         <crud-base.version>0.0.1</crud-base.version>
         <crud-plus.version>0.0.4</crud-plus.version>
         <crud-log.version>0.0.1</crud-log.version>
+        <crud-core.version>0.0.1</crud-core.version>
+        <sb-base.version>2.2.0</sb-base.version>
         <uaas.version>2.0.0</uaas.version>
         <sb-starter-test.version>1.0.0</sb-starter-test.version>
         <skipStandalone>false</skipStandalone>
@@ -38,6 +40,11 @@
             <artifactId>crud-plus</artifactId>
             <version>${crud-plus.version}</version>
         </dependency>
+<!--        <dependency>
+            <groupId>com.jfeat</groupId>
+            <artifactId>crud-core</artifactId>
+            <version>${crud-core.version}</version>
+        </dependency>-->
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>crud-log</artifactId>
@@ -45,8 +52,19 @@
         </dependency>
         <dependency>
             <groupId>com.jfeat</groupId>
+            <artifactId>sb-base</artifactId>
+            <version>${sb-base.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jfeat</groupId>
             <artifactId>uaas</artifactId>
             <version>${uaas.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.jfeat</groupId>
+                    <artifactId>sb-base</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
