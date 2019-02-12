@@ -5,5 +5,5 @@ import com.jfeat.am.module.test.services.gen.crud.service.CRUDTestSaasEntityServ
 /**
  * Created by vincent on 2017/10/19.
  */
-public interface TestSaasEntityService extends CRUDTestSaasEntityService{
-    }
+public interface TestSaasEntityService extends CRUDTestSaasEntityService {
+}
