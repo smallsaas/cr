@@ -20,6 +20,6 @@ public class AmApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(AmApplication.class, args);
-        logger.info("Test Dao is success!");
+        logger.info("Test SaaS is success!");
     }
 }

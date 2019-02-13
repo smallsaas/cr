@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jfeat</groupId>
-    <artifactId>env-saas-starter</artifactId>
+    <artifactId>env-test-saas</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -20,11 +20,12 @@
 
     <properties>
         <crud-base.version>0.0.1</crud-base.version>
-        <crud-plus.version>0.0.4</crud-plus.version>
+        <crud-plus.version>0.0.5</crud-plus.version>
         <crud-log.version>0.0.1</crud-log.version>
-        <crud-core.version>0.0.1</crud-core.version>
-        <sb-base.version>2.2.0</sb-base.version>
-        <uaas.version>2.0.0</uaas.version>
+        <jwt-core.version>0.0.1</jwt-core.version>
+        <perm-core.version>0.0.1</perm-core.version>
+        <!--<sb-base.version>2.2.0</sb-base.version>-->
+        <!--<uaas.version>2.0.0</uaas.version>-->
         <sb-starter-test.version>1.0.0</sb-starter-test.version>
         <skipStandalone>false</skipStandalone>
     </properties>
@@ -40,16 +41,22 @@
             <artifactId>crud-plus</artifactId>
             <version>${crud-plus.version}</version>
         </dependency>
-<!--        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>crud-core</artifactId>
-            <version>${crud-core.version}</version>
-        </dependency>-->
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>crud-log</artifactId>
             <version>${crud-log.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.jfeat</groupId>
+            <artifactId>jwt-core</artifactId>
+            <version>${jwt-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jfeat</groupId>
+            <artifactId>perm-core</artifactId>
+            <version>${perm-core.version}</version>
+        </dependency>
+        <!--
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>sb-base</artifactId>
@@ -65,7 +72,7 @@
                     <artifactId>sb-base</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.jfeat</groupId>
