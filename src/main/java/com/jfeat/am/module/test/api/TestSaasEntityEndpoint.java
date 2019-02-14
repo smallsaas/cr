@@ -33,7 +33,7 @@ import java.util.Date;
 @RestController
 
 @Api("TestSaasEntity")
-@RequestMapping("/api/test/testSaasEntityies")
+@RequestMapping("/api/test/saas/entities")
 public class TestSaasEntityEndpoint {
 
 

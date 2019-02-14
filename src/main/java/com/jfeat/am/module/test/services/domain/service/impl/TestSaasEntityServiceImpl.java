@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author admin
@@ -14,4 +14,4 @@ import org.springframework.stereotype.Service;
  */
 @Service("testSaasEntityService")
 public class TestSaasEntityServiceImpl extends CRUDTestSaasEntityServiceImpl implements TestSaasEntityService {
-                            }
+}
