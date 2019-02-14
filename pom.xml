@@ -19,67 +19,39 @@
     </parent>
 
     <properties>
-        <crud-base.version>0.0.1</crud-base.version>
         <crud-plus.version>0.0.5</crud-plus.version>
         <crud-log.version>0.0.1</crud-log.version>
-        <jwt-core.version>0.0.1</jwt-core.version>
-        <perm-core.version>0.0.1</perm-core.version>
-        <!--<sb-base.version>2.2.0</sb-base.version>-->
-        <!--<uaas.version>2.0.0</uaas.version>-->
-        <sb-starter-test.version>1.0.0</sb-starter-test.version>
         <skipStandalone>false</skipStandalone>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.jfeat</groupId>
-            <artifactId>crud-base</artifactId>
-            <version>${crud-base.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jfeat</groupId>
             <artifactId>crud-plus</artifactId>
             <version>${crud-plus.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.jfeat</groupId>
+                    <artifactId>jwt-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>crud-log</artifactId>
             <version>${crud-log.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>jwt-core</artifactId>
-            <version>${jwt-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>perm-core</artifactId>
-            <version>${perm-core.version}</version>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>sb-base</artifactId>
-            <version>${sb-base.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>uaas</artifactId>
-            <version>${uaas.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.jfeat</groupId>
-                    <artifactId>sb-base</artifactId>
+                    <artifactId>crud-plus</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.jfeat</groupId>
+                    <artifactId>jwt-core</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>-->
-
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>sb-starter-test</artifactId>
-            <version>${sb-starter-test.version}</version>
-            <scope>test</scope>
         </dependency>
+
 
         <!--spring boot依赖-->
         <dependency>

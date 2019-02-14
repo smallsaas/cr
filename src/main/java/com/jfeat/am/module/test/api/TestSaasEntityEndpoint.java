@@ -2,7 +2,6 @@ package com.jfeat.am.module.test.api;
 
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.jfeat.am.module.log.annotation.BusinessLog;
 import com.jfeat.am.module.test.services.domain.dao.QueryTestSaasEntityDao;
 import com.jfeat.am.module.test.services.domain.model.TestSaasEntityRecord;
 import com.jfeat.am.module.test.services.domain.service.TestSaasEntityService;
@@ -43,7 +42,6 @@ public class TestSaasEntityEndpoint {
     @Resource
     QueryTestSaasEntityDao queryTestSaasEntityDao;
 
-    @BusinessLog(name = "TestSaasEntity", value = "create TestSaasEntity")
     @PostMapping
     @ApiOperation(value = "新建 TestSaasEntity", response = TestSaasEntity.class)
     public Tip createTestSaasEntity(@RequestBody TestSaasEntity entity) {
@@ -59,14 +57,12 @@ public class TestSaasEntityEndpoint {
         return SuccessTip.create(affected);
     }
 
-    @BusinessLog(name = "TestSaasEntity", value = "查看 TestSaasEntity")
     @GetMapping("/{id}")
     @ApiOperation(value = "查看 TestSaasEntity", response = TestSaasEntity.class)
     public Tip getTestSaasEntity(@PathVariable Long id) {
         return SuccessTip.create(testSaasEntityService.retrieveMaster(id));
     }
 
-    @BusinessLog(name = "TestSaasEntity", value = "update TestSaasEntity")
     @PutMapping("/{id}")
     @ApiOperation(value = "修改 TestSaasEntity", response = TestSaasEntity.class)
     public Tip updateTestSaasEntity(@PathVariable Long id, @RequestBody TestSaasEntity entity) {
@@ -74,14 +70,12 @@ public class TestSaasEntityEndpoint {
         return SuccessTip.create(testSaasEntityService.updateMaster(entity));
     }
 
-    @BusinessLog(name = "TestSaasEntity", value = "delete TestSaasEntity")
     @DeleteMapping("/{id}")
     @ApiOperation("删除 TestSaasEntity")
     public Tip deleteTestSaasEntity(@PathVariable Long id) {
         return SuccessTip.create(testSaasEntityService.deleteMaster(id));
     }
 
-    @BusinessLog(name = "TestSaasEntity", value = "delete TestSaasEntity")
     @ApiOperation(value = "TestSaasEntity 列表信息", response = TestSaasEntityRecord.class)
     @GetMapping
     @ApiImplicitParams({
