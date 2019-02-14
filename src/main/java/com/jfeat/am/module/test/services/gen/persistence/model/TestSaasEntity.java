@@ -1,13 +1,14 @@
 package com.jfeat.am.module.test.services.gen.persistence.model;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
-
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -39,8 +40,14 @@ public class TestSaasEntity extends Model<TestSaasEntity> {
      * 测试名称
      */
 	private String name;
+    /**
+     * �?属组�?
+     */
 	@TableField("org_id")
 	private Long orgId;
+    /**
+     * 状�??
+     */
 	private String status;
     /**
      * 创建时间
