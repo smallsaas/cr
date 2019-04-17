@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jfeat.am.module.cr.services.persistence.dao.IssueMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.jfeat.am.module.cr.services.persistence.model.Issue">
+		<id column="id" property="id" />
+		<result column="module_id" property="moduleId" />
+		<result column="org_id" property="orgId" />
+		<result column="create_by" property="createBy" />
+		<result column="create_by_name" property="createByName" />
+		<result column="title" property="title" />
+		<result column="note" property="note" />
+		<result column="priority" property="priority" />
+		<result column="image_url" property="imageUrl" />
+		<result column="attachment" property="attachment" />
+		<result column="status" property="status" />
+		<result column="owner_id" property="ownerId" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, module_id AS moduleId, org_id AS orgId, create_by AS createBy, create_by_name AS createByName, title, note, priority, image_url AS imageUrl, attachment, status, owner_id AS ownerId, create_time AS createTime
+    </sql>
+
+</mapper>

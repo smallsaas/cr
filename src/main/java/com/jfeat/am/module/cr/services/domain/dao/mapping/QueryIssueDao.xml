@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jfeat.am.module.cr.services.domain.dao.QueryIssueDao">
+    <sql id="Base_Column_List">
+        cr_issue.*
+    </sql>
+
+    <!--所有的ISSUE，通过 ISSUE 的任何一个字段来索引-->
+    <select id="findIssuePage" resultType="IssueRecord" parameterType="IssueRecord">
+        SELECT cr_issue.*,
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName,
+        t_sys_org.name as orgName,
+        t_sys_user.account as ownerName
+        from cr_issue
+        left join t_sys_user on t_sys_user.id = cr_issue.owner_id
+        left join t_sys_org on t_sys_org.id = cr_issue.org_id
+        LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+        LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+        FROM cr_issue
+        WHERE 1=1
+        <if test="record.id != null and record.id>0 ">
+            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
+        </if>
+
+        <if test="record.moduleId != null and record.moduleId>0 ">
+            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
+        </if>
+
+        <if test="record.orgId != null and record.orgId>0 ">
+            AND cr_issue.org_id LIKE CONCAT('%',#{record.orgId},'%')
+        </if>
+
+        <if test="record.createBy != null and record.createBy>0 ">
+            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
+        </if>
+
+        <if test="record.createByName != null and record.createByName!= ''">
+            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
+        </if>
+        <if test="record.title != null and record.title!= ''">
+            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
+        </if>
+        <if test="record.note != null and record.note!= ''">
+            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
+        </if>
+        <if test="record.priority != null and record.priority!= ''">
+            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
+        </if>
+
+        <if test="record.imageUrl != null and record.imageUrl!= ''">
+            AND cr_issue.image_url LIKE CONCAT('%',#{record.imageUrl},'%')
+        </if>
+        <if test="record.attachment != null and record.attachment!= ''">
+            AND cr_issue.attachment LIKE CONCAT('%',#{record.attachment},'%')
+        </if>
+        <if test="record.status != null and record.status!= ''">
+            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
+        </if>
+
+        <if test="record.ownerId != null and record.ownerId>0 ">
+            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
+        </if>
+
+        <if test="record.createTime != null and record.createTime>0 ">
+            AND cr_issue.create_time LIKE CONCAT('%',#{record.createTime},'%')
+        </if>
+
+        order by cr_issue.priority DESC,cr_issue.create_time DESC
+        <!--
+<if test="search != null and search != ''">
+OR cr_issue.name LIKE CONCAT('%',#{search},'%')
+</if>
+-->
+    </select>
+
+    <!-- 单个项目的 ISSUE列表-->
+    <select id="projectIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
+        SELECT
+            cr_issue.*,
+            cr_module.module_name as moduleName,
+            t_sys_org.name as orgName,
+            t_sys_user.account as ownerName
+        from cr_issue
+            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
+            left join t_sys_org on t_sys_org.id = cr_issue.org_id
+            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+        WHERE cr_issue.module_id in (
+            SELECT cr_module.id
+            FROM cr_module
+            left join cr_project on cr_project.id = cr_module.project_id
+            WHERE cr_project.id = #{projectId}
+        )
+        <if test="record.moduleId != null and record.moduleId>0 ">
+            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
+        </if>
+
+        <if test="record.orgId != null and record.orgId>0 ">
+            AND cr_issue.org_id LIKE CONCAT('%',#{record.orgId},'%')
+        </if>
+
+        <if test="record.createBy != null and record.createBy>0 ">
+            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
+        </if>
+
+        <if test="record.createByName != null and record.createByName!= ''">
+            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
+        </if>
+        <if test="record.title != null and record.title!= ''">
+            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
+        </if>
+        <if test="record.note != null and record.note!= ''">
+            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
+        </if>
+        <if test="record.priority != null and record.priority!= ''">
+            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
+        </if>
+
+        <if test="record.imageUrl != null and record.imageUrl!= ''">
+            AND cr_issue.image_url LIKE CONCAT('%',#{record.imageUrl},'%')
+        </if>
+        <if test="record.attachment != null and record.attachment!= ''">
+            AND cr_issue.attachment LIKE CONCAT('%',#{record.attachment},'%')
+        </if>
+        <if test="record.status != null and record.status!= ''">
+            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
+        </if>
+
+        <if test="record.ownerId != null and record.ownerId>0 ">
+            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
+        </if>
+
+        <if test="record.createTime != null and record.createTime>0 ">
+            AND cr_issue.create_time LIKE CONCAT('%',#{record.createTime},'%')
+        </if>
+        order by cr_issue.priority DESC,cr_issue.create_time DESC
+    </select>
+
+    <!-- 指定模块 ISSUE列表-->
+    <select id="moduleIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord" parameterType="long">
+        SELECT
+            cr_issue.*,
+            cr_module.module_name as moduleName,
+            cr_project.project_name as projectName,
+            t_sys_org.name as orgName,
+            t_sys_user.account as ownerName
+        from cr_issue
+            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
+            left join t_sys_org on t_sys_org.id = cr_issue.org_id
+            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+            LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+        WHERE cr_issue.module_id #{moduleId}
+        order by cr_issue.priority DESC,cr_issue.create_time DESC
+    </select>
+
+
+    <!-- 指定部门的 ISSUE列表-->
+    <select id="moduleIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord" parameterType="long">
+        SELECT
+            cr_issue.*,
+            cr_module.module_name as moduleName,
+            cr_project.project_name as projectName,
+            t_sys_org.name as orgName,
+            t_sys_user.account as ownerName
+        from cr_issue
+            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
+            left join t_sys_org on t_sys_org.id = cr_issue.org_id
+            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+            LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+        WHERE t_sys_org.id.id = #{orgId}
+        order by cr_issue.priority DESC,cr_issue.create_time DESC
+    </select>
+    <!-- 指定部门的下属部门(包含本部门) ISSUE列表-->
+    <select id="moduleIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
+        SELECT
+            cr_issue.*,
+            cr_module.module_name as moduleName,
+            cr_project.project_name as projectName,
+            children.name as orgName,
+            t_sys_user.account as ownerName
+        from cr_issue
+            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
+            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+            LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+            LEFT JOIN t_sys_org children on cr_issue.org_id = children.id
+        WHERE cr_issue.org_id in (
+            SELECT
+            children.id
+            FROM
+            t_sys_org,
+            t_sys_org AS children
+            WHERE
+            t_sys_org.left_num &lt;=
+
+            children.left_num
+            AND t_sys_org.right_num >= children.left_num
+            AND t_sys_org.id = #{orgId}
+        )
+        order by t_sys_org.node_level ASC,cr_issue.priority DESC,cr_issue.create_time DESC
+    </select>
+
+    <!-- 指定部门的下属部门(不包含本部门) ISSUE列表-->
+    <select id="moduleIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord" parameterType="long">
+        SELECT
+            cr_issue.*,
+            cr_module.module_name as moduleName,
+            cr_project.project_name as projectName,
+            children.name as orgName,
+            t_sys_user.account as ownerName
+        from cr_issue
+            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
+            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+            LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+            LEFT JOIN t_sys_org children on cr_issue.org_id = children.id
+        WHERE cr_issue.org_id in (
+            SELECT
+                children.id
+            FROM
+                t_sys_org,
+                t_sys_org AS children
+            WHERE
+                (t_sys_org.left_num &lt; children.left_num
+                AND t_sys_org.right_num &gt; children.left_num)
+            AND t_sys_org.id = #{orgId}
+        )
+        order by t_sys_org.node_level ASC,cr_issue.priority DESC,cr_issue.create_time DESC
+    </select>
+
+    <!--我负责的ISSUE 列表(   或者查看 具体某个人负责的ISSUE 列表 通过插入用户的ID就行索引)-->
+
+    <select id="ownerIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord" parameterType="long">
+        SELECT
+        cr_issue.*,
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName,
+        t_sys_org.name as orgName
+        from cr_issue
+        left join t_sys_org on t_sys_org.id = cr_issue.org_id
+        LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+        LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+        WHERE cr_issue.owner_id = #{userId}
+    </select>
+
+
+
+    <!-- ISSUE 详情，包括 ISSUR 处理的  NOTE等所有的关于该 ISSUE 的所有的信息-->
+    <resultMap id="IssueModel" type="com.jfeat.am.module.cr.services.domain.model.IssueModel">
+        <id column="id" property="id" />
+        <result column="module_id" property="moduleId" />
+        <result column="org_id" property="orgId" />
+        <result column="create_by" property="createBy" />
+        <result column="create_by_name" property="createByName" />
+        <result column="title" property="title" />
+        <result column="note" property="note" />
+        <result column="priority" property="priority" />
+        <result column="image_url" property="imageUrl" />
+        <result column="attachment" property="attachment" />
+        <result column="status" property="status" />
+        <result column="owner_id" property="ownerId" />
+        <result column="moduleName" property="moduleName" />
+        <result column="orgName" property="orgName" />
+        <result column="ownerName" property="ownerName" />
+        <result column="projectName" property="projectName" />
+        <result column="create_time" property="createTime" />
+
+        <collection property="issueNotes"
+                    ofType="com.jfeat.am.module.cr.services.persistence.model.IssueNote"
+                    select="issueNotes" column="id">
+        </collection>
+
+    </resultMap>
+    <select id="issueDetails" resultMap="IssueModel" parameterType="long">
+        SELECT cr_issue.*,
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName,
+        t_sys_org.name as orgName,
+        t_sys_user.account as ownerName
+        from cr_issue
+        left join t_sys_user on t_sys_user.id = cr_issue.owner_id
+        left join t_sys_org on t_sys_org.id = cr_issue.org_id
+        LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+        LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+        FROM cr_issue
+        WHERE 1=1
+        and cr_issue.id = #{issueId}
+        order by cr_issue.priority DESC,cr_issue.create_time DESC
+    </select>
+    <!--collection Master 传入的ID的 ISSUE 的所有的处理意见-->
+    <select id="issueNotes" parameterType="long" resultType="com.jfeat.am.module.cr.services.persistence.model.IssueNote">
+        SELECT cr_issue_note.*
+        FROM cr_issue_note
+        LEFT JOIN cr_issue on cr_issue.id = cr_issue_note.issue_id
+        WHERE cr_issue.id = #{id}
+        order by cr_issue_note.create_time DESC
+    </select>
+
+
+</mapper>
