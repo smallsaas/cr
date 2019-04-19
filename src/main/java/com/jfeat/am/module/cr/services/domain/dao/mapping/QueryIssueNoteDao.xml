@@ -46,8 +46,8 @@
             AND cr_issue_note.create_time LIKE CONCAT('%',#{record.createTime},'%')
             </if>
                         <!--
-        <if test="search != null and search != ''">
-            OR cr_issue_note.name LIKE CONCAT('%',#{search},'%')
+        <if test="path != null and path != ''">
+            OR cr_issue_note.name LIKE CONCAT('%',#{path},'%')
         </if>
         -->
     </select>

@@ -36,7 +36,7 @@ import java.util.Date;
  */
 @RestController
 
-@RequestMapping("/api/cr/projects")
+@RequestMapping("/api/crud/projects")
 public class ProjectEndpoint {
 
 
@@ -91,7 +91,7 @@ public class ProjectEndpoint {
     public Tip queryProjects(Page<ProjectRecord> page,
                              @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                              @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                             @RequestParam(name = "search", required = false) String search,
+                             @RequestParam(name = "path", required = false) String search,
                              @RequestParam(name = "id", required = false) Long id,
                              @RequestParam(name = "orgId", required = false) Long orgId,
                              @RequestParam(name = "projectName", required = false) String projectName,

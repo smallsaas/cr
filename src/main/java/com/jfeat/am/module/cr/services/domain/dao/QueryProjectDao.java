@@ -11,5 +11,5 @@ import java.util.List;
  * Created by Code Generator on 2019-04-08
  */
 public interface QueryProjectDao extends BaseMapper<ProjectRecord> {
-    List<ProjectRecord> findProjectPage(Page<ProjectRecord> page, @Param("record") ProjectRecord record, @Param("search") String search, @Param("orderBy") String orderBy);
+    List<ProjectRecord> findProjectPage(Page<ProjectRecord> page, @Param("record") ProjectRecord record, @Param("path") String search, @Param("orderBy") String orderBy);
 }

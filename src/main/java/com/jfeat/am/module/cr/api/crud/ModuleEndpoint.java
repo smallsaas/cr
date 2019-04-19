@@ -38,7 +38,7 @@ import java.util.Date;
  */
 @RestController
 
-@RequestMapping("/api/cr/modules")
+@RequestMapping("/api/crud/modules")
 public class ModuleEndpoint {
 
 
@@ -92,7 +92,7 @@ public class ModuleEndpoint {
     public Tip queryModules(Page<ModuleRecord> page,
                             @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                             @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                            @RequestParam(name = "search", required = false) String search,
+                            @RequestParam(name = "path", required = false) String search,
                             @RequestParam(name = "id", required = false) Long id,
                             @RequestParam(name = "projectId", required = false) Long projectId,
                             @RequestParam(name = "note", required = false) String note,

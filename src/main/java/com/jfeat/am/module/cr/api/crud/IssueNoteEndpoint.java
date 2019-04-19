@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @RestController
 
-@RequestMapping("/api/cr/issue/notes")
+@RequestMapping("/api/crud/issue/notes")
 public class IssueNoteEndpoint {
 
 
@@ -94,7 +94,7 @@ public class IssueNoteEndpoint {
     public Tip queryIssueNotes(Page<IssueNoteRecord> page,
                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                               @RequestParam(name = "search", required = false) String search,
+                               @RequestParam(name = "path", required = false) String search,
                                @RequestParam(name = "id", required = false) Long id,
                                @RequestParam(name = "issueId", required = false) Long issueId,
                                @RequestParam(name = "handlerId", required = false) Long handlerId,

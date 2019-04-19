@@ -11,5 +11,5 @@ import java.util.List;
  * Created by Code Generator on 2019-04-08
  */
 public interface QueryModuleDao extends BaseMapper<ModuleRecord> {
-    List<ModuleRecord> findModulePage(Page<ModuleRecord> page, @Param("record") ModuleRecord record, @Param("search") String search, @Param("orderBy") String orderBy);
+    List<ModuleRecord> findModulePage(Page<ModuleRecord> page, @Param("record") ModuleRecord record, @Param("path") String search, @Param("orderBy") String orderBy);
 }

@@ -42,8 +42,8 @@ import java.util.Date;
  * @since 2019-04-08
  */
 @RestController
-
-@RequestMapping("/api/cr/issues")
+@Api("ISSUE API CRUD")
+@RequestMapping("/api/crud/issues")
 public class IssueEndpoint{
 
 
@@ -57,7 +57,6 @@ public class IssueEndpoint{
     @PostMapping
     @ApiOperation(value = "新建 Issue", response = Issue.class)
     public Tip createIssue(@RequestBody Issue entity) {
-
         Integer affected = 0;
         try {
             entity.setCreateBy(JWTKit.getUserId());
@@ -73,7 +72,7 @@ public class IssueEndpoint{
     @GetMapping("/{id}")
     @ApiOperation(value = "查看 Issue", response = Issue.class)
     public Tip getIssue(@PathVariable Long id) {
-        return SuccessTip.create(issueService.retrieveMaster(id));
+        return SuccessTip.create(queryIssueDao.issueDetails(id));
     }
 
     @BusinessLog(name = "Issue", value = "update Issue")
@@ -99,7 +98,7 @@ public class IssueEndpoint{
     public Tip queryIssues(Page<IssueRecord> page,
                            @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                           @RequestParam(name = "search", required = false) String search,
+                           @RequestParam(name = "path", required = false) String search,
                            @RequestParam(name = "id", required = false) Long id,
                            @RequestParam(name = "moduleId", required = false) Long moduleId,
                            @RequestParam(name = "orgId", required = false) Long orgId,
@@ -112,7 +111,11 @@ public class IssueEndpoint{
                            @RequestParam(name = "attachment", required = false) String attachment,
                            @RequestParam(name = "status", required = false) String status,
                            @RequestParam(name = "ownerId", required = false) Long ownerId,
-                           @RequestParam(name = "createTime", required = false) Date createTime,
+                           @RequestParam(name = "moduleName", required = false) String moduleName,
+                           @RequestParam(name = "orgName", required = false) String orgName,
+                           @RequestParam(name = "projectName", required = false) String projectName,
+                           @RequestParam(name = "orgName", required = false) String ownerName,
+                           @RequestParam(name = "createTime", required = false) Date[] createTime,
                            @RequestParam(name = "orderBy", required = false) String orderBy,
                            @RequestParam(name = "sort", required = false) String sort) {
         if (orderBy != null && orderBy.length() > 0) {
@@ -129,7 +132,15 @@ public class IssueEndpoint{
         page.setCurrent(pageNum);
         page.setSize(pageSize);
 
+        Date startTime = (createTime!=null && createTime.length == 2)? createTime [0] : null;
+        Date endTime = (createTime!=null && createTime.length == 2)? createTime [1] : null;
+
+
         IssueRecord record = new IssueRecord();
+        record.setModuleName(moduleName);
+        record.setOrgName(orgName);
+        record.setOwnerName(ownerName);
+        record.setProjectName(projectName);
         record.setId(id);
         record.setModuleId(moduleId);
         record.setOrgId(orgId);
@@ -142,8 +153,7 @@ public class IssueEndpoint{
         record.setAttachment(attachment);
         record.setStatus(status);
         record.setOwnerId(ownerId);
-        record.setCreateTime(createTime);
-        page.setRecords(queryIssueDao.findIssuePage(page, record, search, orderBy));
+        page.setRecords(queryIssueDao.findIssuePage(page, record, startTime,endTime));
         return SuccessTip.create(page);
     }
 

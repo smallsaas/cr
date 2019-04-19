@@ -11,5 +11,5 @@ import java.util.List;
  * Created by Code Generator on 2019-04-08
  */
 public interface QueryIssueNoteDao extends BaseMapper<IssueNoteRecord> {
-    List<IssueNoteRecord> findIssueNotePage(Page<IssueNoteRecord> page, @Param("record") IssueNoteRecord record, @Param("search") String search, @Param("orderBy") String orderBy);
+    List<IssueNoteRecord> findIssueNotePage(Page<IssueNoteRecord> page, @Param("record") IssueNoteRecord record, @Param("path") String search, @Param("orderBy") String orderBy);
 }
