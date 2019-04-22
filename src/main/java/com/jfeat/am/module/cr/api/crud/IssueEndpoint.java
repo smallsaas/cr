@@ -2,6 +2,7 @@ package com.jfeat.am.module.cr.api.crud;
 
 import com.jfeat.am.core.jwt.JWTKit;
 import com.jfeat.am.module.cr.services.crud.filter.IssueFilter;
+import com.jfeat.am.module.cr.services.definition.IssueStatus;
 import com.jfeat.am.module.cr.services.persistence.model.Issue;
 import com.jfeat.am.module.log.annotation.BusinessLog;
 import com.jfeat.crud.base.exception.BusinessCode;
@@ -59,6 +60,7 @@ public class IssueEndpoint{
     public Tip createIssue(@RequestBody Issue entity) {
         Integer affected = 0;
         try {
+            entity.setStatus(IssueStatus.OPEN.toString());
             entity.setCreateBy(JWTKit.getUserId());
             entity.setCreateByName(JWTKit.getAccount());
             affected += issueService.createMaster(entity);
