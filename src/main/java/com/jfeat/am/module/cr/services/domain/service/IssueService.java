@@ -17,4 +17,6 @@ public interface IssueService extends CRUDIssueService{
     Integer doneIssue(Long issueId,HandlerRequest request);
 
     Integer transferIssue(Long issueId,HandlerRequest request);
+
+    Integer fixedIssue( Long issueId,HandlerRequest request);
 }
