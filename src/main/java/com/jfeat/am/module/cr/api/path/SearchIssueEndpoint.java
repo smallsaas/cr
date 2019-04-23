@@ -345,8 +345,8 @@ public class SearchIssueEndpoint {
         return SuccessTip.create(page);
     }
 
-    @ApiOperation(value = "指定部门的下属部门(不包含本部门) ISSUE列表", response = IssueRecord.class)
-    @GetMapping("/kids/{orgId}")
+    @ApiOperation(value = "我的 ISSUE列表", response = IssueRecord.class)
+    @GetMapping("/owner")
     public Tip ownerIssueDetails(Page<IssueRecord> page,
                                 @PathVariable Long orgId,
                                 @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
