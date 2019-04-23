@@ -36,8 +36,8 @@ public class HandlerIssueEndpoint {
         return SuccessTip.create(issueService.repetitionErrorIssue(issueId,request));
     }
 
-    @ApiOperation("未复现ISSUE")
-    @PostMapping("/{id}/action/repetition")
+    @ApiOperation("修复ISSUE")
+    @PostMapping("/{id}/action/fixed")
     public Tip fixedErrorIssue(@PathVariable Long issueId, @RequestBody HandlerRequest request) {
         return SuccessTip.create(issueService.fixedIssue(issueId,request));
     }
