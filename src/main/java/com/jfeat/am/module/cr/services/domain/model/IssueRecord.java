@@ -12,6 +12,8 @@ public class IssueRecord extends Issue{
     String ownerName;
     String projectName;
 
+    Integer replyNum;
+
     public String getModuleName() {
         return moduleName;
     }
@@ -42,5 +44,14 @@ public class IssueRecord extends Issue{
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+
+    public Integer getReplyNum() {
+        return replyNum;
+    }
+
+    public void setReplyNum(Integer replyNum) {
+        this.replyNum = replyNum;
     }
 }

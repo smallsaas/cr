@@ -44,6 +44,7 @@ CREATE TABLE `cr_issue` (
   `note` varchar(255) DEFAULT NULL COMMENT '问题描述',
   `priority` tinyint NOT NULL default 1 COMMENT '优先级,越大月严重',
   `image_url` varchar(255) DEFAULT NULL COMMENT '问题截图',
+  `view_num` int DEFAULT 0 COMMENT '浏览数量',
   `attachment` varchar(255) DEFAULT NULL COMMENT '附件',
   `status` varchar(26) NOT NULL DEFAULT 'OPEN' COMMENT '状态',
   `owner_id` bigint(20) DEFAULT NULL COMMENT '指派处理人',

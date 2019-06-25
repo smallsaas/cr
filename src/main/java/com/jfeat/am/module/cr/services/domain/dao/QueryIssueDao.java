@@ -73,6 +73,14 @@ public interface QueryIssueDao extends BaseMapper<IssueRecord> {
                                        @Param("endTime") Date endTime);
 
     /*
+     * OPEN ISSUE 列表
+     * */
+    List<IssueRecord> openIssue(Page<IssueRecord> page,
+                                        @Param("record") IssueRecord record,
+                                        @Param("startTime") Date startTime,
+                                        @Param("endTime") Date endTime);
+
+    /*
     * ISSUE 详情，包括 ISSUR 处理的  NOTE等所有的关于该 ISSUE 的所有的信息
     * */
     IssueModel issueDetails(@Param("issueId") Long issueId);
