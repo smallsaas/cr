@@ -468,7 +468,15 @@
         cr_issue.*,
         cr_module.module_name as moduleName,
         cr_project.project_name as projectName,
-        t_sys_org.name as orgName
+        t_sys_org.name as orgName,
+        (
+        SELECT
+        count(*)
+        FROM
+        cr_issue_note
+        WHERE
+        cr_issue.id = cr_issue_note.issue_id
+        ) AS replyNum
         from cr_issue
         left join t_sys_org on t_sys_org.id = cr_issue.org_id
         LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
@@ -487,10 +495,6 @@
 
         <if test="record.projectName != null and record.projectName!= ''">
             AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
-        </if>
-
-        <if test="record.projectId != null and record.projectId>0 ">
-            AND cr_project.id LIKE CONCAT('%',#{record.projectId},'%')
         </if>
 
         <if test="record.createBy != null and record.createBy>0 ">
@@ -588,16 +592,14 @@
         cr_issue_note
         WHERE
         cr_issue.id = cr_issue_note.issue_id
-        ) AS replyNum,
+        ) AS replyNum
 
         from cr_issue
         left join t_sys_org on t_sys_org.id = cr_issue.org_id
         LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
         LEFT JOIN cr_project on cr_project.id = cr_module.project_id
         WHERE (ISNULL(cr_issue.owner_id) or  cr_issue.owner_id = '')
-        <if test="record.id != null and record.id>0 ">
-            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
-        </if>
+
 
         <if test="record.moduleId != null and record.moduleId>0 ">
             AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
@@ -608,10 +610,6 @@
 
         <if test="record.projectName != null and record.projectName!= ''">
             AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
-        </if>
-
-        <if test="record.projectId != null and record.projectId>0 ">
-            AND cr_project.id LIKE CONCAT('%',#{record.projectId},'%')
         </if>
 
         <if test="record.createBy != null and record.createBy>0 ">
@@ -640,7 +638,7 @@
            cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
             ]]>
         </if>
-        order by t_sys_org.node_level ASC,cr_issue.priority DESC,cr_issue.create_time DESC
+        order by cr_issue.priority DESC,cr_issue.create_time DESC
     </select>
 
 

@@ -348,7 +348,6 @@ public class SearchIssueEndpoint {
     @ApiOperation(value = "我的 ISSUE列表", response = IssueRecord.class)
     @GetMapping("/mine/issues")
     public Tip ownerIssueDetails(Page<IssueRecord> page,
-                                @PathVariable Long orgId,
                                 @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                 @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                                 @RequestParam(name = "path", required = false) String search,
@@ -407,7 +406,6 @@ public class SearchIssueEndpoint {
     @ApiOperation(value = "我的 ISSUE列表", response = IssueRecord.class)
     @GetMapping("/open/issues")
     public Tip openIssue(Page<IssueRecord> page,
-                                 @PathVariable Long orgId,
                                  @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                  @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                                  @RequestParam(name = "path", required = false) String search,
