@@ -19,8 +19,8 @@
     </parent>
 
     <properties>
-        <crud-plus.version>0.0.5</crud-plus.version>
-        <crud-core.version>0.0.1</crud-core.version>
+        <crud-plus.version>0.0.6</crud-plus.version>
+        <uaas.version>2.0.0</uaas.version>
         <jwt-core.version>0.0.1</jwt-core.version>
         <sb-log.version>1.0.0</sb-log.version>
         <skipStandalone>true</skipStandalone>
@@ -30,15 +30,21 @@
 
         <dependency>
             <groupId>com.jfeat</groupId>
-            <artifactId>resource-server-local</artifactId>
-            <version>1.0.0</version>
+            <artifactId>uaas</artifactId>
+            <version>${uaas.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>resource-server-dubbo</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.jfeat</groupId>-->
+            <!--<artifactId>resource-server-local</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.jfeat</groupId>-->
+            <!--<artifactId>resource-server-dubbo</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.jfeat</groupId>
@@ -56,11 +62,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>crud-core</artifactId>
-            <version>${crud-core.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>jwt-core</artifactId>

@@ -3,11 +3,41 @@
 ##########################################################
 
 ################## 腾讯云发送信息配置 ###################
-q-cloud-sms-config:
-  appid: 1400083239
-  appkey: 2eed6e1aea662fba7f9be205c01dd179
-  templ-id: 107517
-  msg: 你的验证码为{1},请妥善保存,切勿泄露,以免被他人盗用!
+#q-cloud-sms-config:
+#  appid: 1400083239
+#  appkey: 2eed6e1aea662fba7f9be205c01dd179
+#  templ-id: 107517
+#  msg: 你的验证码为{1},请妥善保存,切勿泄露,以免被他人盗用!
+
+
+#
+################### 授权中心地址配置 ###################
+#auth-server: http://localhost:9999/uaa #授权中心地址
+#server:
+#  port: 7777
+#security:
+#  basic:
+#    enabled: false
+#  oauth2:
+#    client: #资源服务器的client-id、client-secret用于basic签名，统一配置就好，不用修改
+#      client-id: resource-server
+#      client-secret: secret
+#      access-token-uri: ${auth-server}/oauth/token #用于获取token
+#      user-authorization-uri: ${auth-server}/oauth/authorize #用于授权
+#    resource:
+#      token-info-uri: ${auth-server}/oauth/check_token #用于检查token有效性
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+#spring:
+#  jackson:
+#    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+#  dubbo: #dubbo配置
+#    application:
+#      name: resources-server-1 #唯一应用名称，需修改
+#    registry:
+#      address: zookeeper://127.0.0.1:2181 #服务注册中心地址
+#    scan: com.jfeat #扫包路径
 
 ###################  am配置  ###################
 am:
