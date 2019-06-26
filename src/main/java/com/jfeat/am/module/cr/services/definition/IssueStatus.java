@@ -11,7 +11,7 @@ public enum IssueStatus {
 
 
 
-                 OPEN,//## 开放
+                OPEN,//## 开放
                 FIXED,//## 修复
                 NFP,//##无修复计划
                 NTF,//## 未发现问题

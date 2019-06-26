@@ -1,10 +1,15 @@
 package com.jfeat.am.module.cr.services.bean;
 
+import java.util.List;
+
 public class HandlerRequest {
     Long issueId;
     Long ownerId;
     String ownerName;
     String note;
+
+    // pending
+    List<String> imagesUrl;
 
 
     public Long getIssueId() {
@@ -39,4 +44,11 @@ public class HandlerRequest {
         this.note = note;
     }
 
+    public List<String> getImagesUrl() {
+        return imagesUrl;
+    }
+
+    public void setImagesUrl(List<String> imagesUrl) {
+        this.imagesUrl = imagesUrl;
+    }
 }

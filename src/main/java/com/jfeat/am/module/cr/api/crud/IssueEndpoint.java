@@ -75,6 +75,9 @@ public class IssueEndpoint{
     @GetMapping("/{id}")
     @ApiOperation(value = "查看 Issue", response = Issue.class)
     public Tip getIssue(@PathVariable Long id) {
+
+        // 浏览数加1
+        issueService.res(id);
         return SuccessTip.create(queryIssueDao.issueDetails(id));
     }
 
