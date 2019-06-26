@@ -63,14 +63,7 @@ public interface QueryIssueDao extends BaseMapper<IssueRecord> {
                                              @Param("startTime") Date startTime,
                                              @Param("endTime") Date endTime);
 
-    /*
-     * 我处理的 ISSUE 列表
-     * */
-    List<IssueRecord> ownerIssueDetails(Page<IssueRecord> page,
-                                       @Param("record") IssueRecord record,
-                                       @Param("userId") Long userId,
-                                       @Param("startTime") Date startTime,
-                                       @Param("endTime") Date endTime);
+
 
     /*
      * OPEN ISSUE 列表
