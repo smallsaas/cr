@@ -513,8 +513,8 @@
         <if test="record.priority != null and record.priority!= ''">
             AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
         </if>
-        <if test="record.status != null and record.status>0 ">
-            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
+        <if test="record.status != null and record.status!='' ">
+            AND cr_issue.status = #{record.status}
         </if>
 
         <if test="startTime != null and endTime != null">
@@ -560,12 +560,11 @@
         cr_project.project_name as projectName,
         t_sys_org.name as orgName,
         t_sys_user.account as ownerName
-        from cr_issue
+        FROM cr_issue
         left join t_sys_user on t_sys_user.id = cr_issue.owner_id
         left join t_sys_org on t_sys_org.id = cr_issue.org_id
         LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
         LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-        FROM cr_issue
         WHERE 1=1
         and cr_issue.id = #{issueId}
     </select>
@@ -628,8 +627,8 @@
         <if test="record.priority != null and record.priority!= ''">
             AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
         </if>
-        <if test="record.status != null and record.status>0 ">
-            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
+        <if test="record.status != null and record.status!='' ">
+            AND cr_issue.status = #{record.status}
         </if>
 
         <if test="startTime != null and endTime != null">
