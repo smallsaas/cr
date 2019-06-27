@@ -17,11 +17,13 @@
 		<result column="status" property="status" />
 		<result column="owner_id" property="ownerId" />
 		<result column="create_time" property="createTime" />
+
+		<result column="view_num" property="viewNum" />
 	</resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, module_id AS moduleId, org_id AS orgId, create_by AS createBy, create_by_name AS createByName, title, note, priority, image_url AS imageUrl, attachment, status, owner_id AS ownerId, create_time AS createTime
+        id, module_id AS moduleId, view_num as viewNum,org_id AS orgId, create_by AS createBy, create_by_name AS createByName, title, note, priority, image_url AS imageUrl, attachment, status, owner_id AS ownerId, create_time AS createTime
     </sql>
 
 </mapper>

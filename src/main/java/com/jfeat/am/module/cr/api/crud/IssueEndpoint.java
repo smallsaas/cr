@@ -64,6 +64,7 @@ public class IssueEndpoint{
             entity.setStatus(IssueStatus.OPEN.toString());
             entity.setCreateBy(JWTKit.getUserId());
             entity.setCreateByName(JWTKit.getAccount());
+            entity.setOrgId(JWTKit.getOrgId());
             affected += issueService.createMaster(entity);
         } catch (DuplicateKeyException e) {
             throw new BusinessException(BusinessCode.DuplicateKey);

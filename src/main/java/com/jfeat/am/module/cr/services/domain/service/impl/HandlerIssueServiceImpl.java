@@ -52,6 +52,9 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
 
             }
         }
+        if (request.getOwnerId().equals(issue.getOwnerId())){
+            throw new BusinessException(5120,"当前处理人已是\""+ request.getOwnerName()+"\",无须重复指派！");
+        }
 
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
@@ -59,9 +62,11 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
         note.setFromStatus(issue.getStatus());
         note.setToStatus(issue.getStatus());
         note.setIssueId(issue.getId());
-        note.setNote(request.getNote()+"\n"+"执行\"指派\"操作:"+JWTKit.getAccount()+" 指派给 "+" 自己。");
+        note.setNote(request.getNote()+"\n"+"执行\"指派\"操作:"+JWTKit.getAccount()+" 指派给 "+ request.getOwnerName());
         affected += issueNoteMapper.insert(note);
 
+        issue.setOwnerId(request.getOwnerId());
+        issueMapper.updateById(issue);
         return affected;
     }
 

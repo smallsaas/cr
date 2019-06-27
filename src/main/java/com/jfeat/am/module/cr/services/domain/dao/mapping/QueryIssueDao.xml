@@ -484,6 +484,8 @@
         <result column="ownerName" property="ownerName" />
         <result column="projectName" property="projectName" />
         <result column="create_time" property="createTime" />
+        <result column="view_num" property="viewNum" />
+
 
         <collection property="issueNotes"
                     ofType="com.jfeat.am.module.cr.services.persistence.model.IssueNote"

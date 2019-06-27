@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>find-password</artifactId>
-            <version>${find-password.version}</version>
+            <version>${find-password}</version>
         </dependency>
 
         <!--<dependency>-->
@@ -53,11 +53,11 @@
             <!--<version>1.0.0</version>-->
         <!--</dependency>-->
 
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>sb-log</artifactId>
-            <version>${sb-log.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.jfeat</groupId>-->
+            <!--<artifactId>sb-log</artifactId>-->
+            <!--<version>${sb-log.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>crud-plus</artifactId>
