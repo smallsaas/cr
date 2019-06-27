@@ -536,6 +536,8 @@
         LEFT JOIN cr_project on cr_project.id = cr_module.project_id
         WHERE (ISNULL(cr_issue.owner_id) or  cr_issue.owner_id = '')
 
+        and (cr_issue.status != 'DONE' or cr_issue.status != 'CLOSED')
+
 
         <if test="record.moduleId != null and record.moduleId>0 ">
             AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')

@@ -22,6 +22,4 @@ public interface IssueService extends CRUDIssueService{
 
     Integer fixedIssue( Long issueId,HandlerRequest request);
 
-    @Select("update cr_issue set view_num = view_num + 1 where cr_issue.id= #{id}")
-    String res(@Param("id")Long id);
 }
