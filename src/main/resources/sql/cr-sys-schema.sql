@@ -36,12 +36,12 @@ CREATE TABLE `cr_module` (
 DROP TABLE IF EXISTS `cr_issue`;
 CREATE TABLE `cr_issue` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'primary key\n',
-  `module_id` bigint(20) NOT NULL COMMENT '模块ID',
-  `org_id` bigint(20) NOT NULL COMMENT '资源隔离使用字段',
+  `module_id` bigint(20) default NULL COMMENT '模块ID',
+  `org_id` bigint(20) default NULL COMMENT '资源隔离使用字段',
   `create_by` bigint(20) NOT NULL COMMENT '创建者ID',
   `create_by_name` varchar(26) NOT NULL COMMENT '创建者名称',
-  `title` varchar(26) NOT NULL COMMENT '问题主要描述',
-  `note` varchar(255) DEFAULT NULL COMMENT '问题描述',
+  `title` varchar(255) NOT NULL COMMENT '问题主要描述',
+  `note` text DEFAULT NULL COMMENT '问题描述',
   `priority` tinyint NOT NULL default 1 COMMENT '优先级,越大月严重',
   `image_url` varchar(255) DEFAULT NULL COMMENT '问题截图',
   `view_num` int DEFAULT 0 COMMENT '浏览数量',

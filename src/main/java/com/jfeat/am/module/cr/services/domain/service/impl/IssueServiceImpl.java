@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -41,7 +42,7 @@ public class IssueServiceImpl extends CRUDIssueServiceImpl implements IssueServi
         switch (handler) {
             // 指派 ISSUE
             case 1:
-                issue.setStatus(IssueStatus.WIP.toString());
+                issue.setStatus(IssueStatus.OPEN.toString());
                 issue.setOwnerId(request.getOwnerId());
                 note.setNote("执行\"指派\"操作:\n" +
                         "指派人:\n" + note.getHandlerName() +
@@ -63,7 +64,7 @@ public class IssueServiceImpl extends CRUDIssueServiceImpl implements IssueServi
                 break;
             // 未复现
             case 3:
-                issue.setStatus(IssueStatus.REPETITIONERROR.toString());
+                issue.setStatus(IssueStatus.NR.toString());
                 note.setNote("执行\"未复现\"操作:\n" +
                         "操作人:\n" + note.getHandlerName() +
                         "。\n"
@@ -83,7 +84,7 @@ public class IssueServiceImpl extends CRUDIssueServiceImpl implements IssueServi
                 break;
             // 4:转移
             case 5:
-                issue.setStatus(IssueStatus.TRANSFER.toString());
+                issue.setStatus(IssueStatus.OPEN.toString());
                 note.setNote("执行\"转移\"操作:\n" +
                         "操作人:\n" + note.getHandlerName() +
                         "。\n"
@@ -138,5 +139,9 @@ public class IssueServiceImpl extends CRUDIssueServiceImpl implements IssueServi
         // handler 1:指派 2:作废 3:未复现 4:完成 5:转移
         return handler(6,issueId,request);
     }
+
+
+
+
 
 }

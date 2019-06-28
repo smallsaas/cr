@@ -1,6 +1,7 @@
 package com.jfeat.am.module.cr.api.crud;
 
 import com.jfeat.am.core.jwt.JWTKit;
+import com.jfeat.am.core.shiro.ShiroKit;
 import com.jfeat.am.module.cr.services.crud.filter.IssueFilter;
 import com.jfeat.am.module.cr.services.definition.IssueStatus;
 import com.jfeat.am.module.cr.services.persistence.model.Issue;
@@ -63,6 +64,7 @@ public class IssueEndpoint{
             entity.setStatus(IssueStatus.OPEN.toString());
             entity.setCreateBy(JWTKit.getUserId());
             entity.setCreateByName(JWTKit.getAccount());
+            entity.setOrgId(JWTKit.getOrgId());
             affected += issueService.createMaster(entity);
         } catch (DuplicateKeyException e) {
             throw new BusinessException(BusinessCode.DuplicateKey);
@@ -74,6 +76,8 @@ public class IssueEndpoint{
     @GetMapping("/{id}")
     @ApiOperation(value = "查看 Issue", response = Issue.class)
     public Tip getIssue(@PathVariable Long id) {
+        // 浏览数加1
+        queryIssueDao.res(id);
         return SuccessTip.create(queryIssueDao.issueDetails(id));
     }
 
@@ -84,6 +88,10 @@ public class IssueEndpoint{
         entity.setId(id);
         IssueFilter filter = new IssueFilter();
         filter.ignore(false);
+        Issue issue = issueService.retrieveMaster(id);
+        if (!issue.getCreateBy().equals(JWTKit.getUserId())){
+            throw new BusinessException(5000,"请勿对他人创建的issue进行修改，如有需要，请提交说明！");
+        }
         return SuccessTip.create(issueService.updateMaster(entity,filter));
     }
 
@@ -91,6 +99,9 @@ public class IssueEndpoint{
     @DeleteMapping("/{id}")
     @ApiOperation("删除 Issue")
     public Tip deleteIssue(@PathVariable Long id) {
+        if (!ShiroKit.hasRole("admin")){
+            throw new BusinessException(5100,"普通用户无法执行管理员操作!");
+        }
         return SuccessTip.create(issueService.deleteMaster(id));
     }
 

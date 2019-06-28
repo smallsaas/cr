@@ -6,6 +6,7 @@ import com.jfeat.am.module.cr.services.domain.model.IssueRecord;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Date;
 import java.util.List;
@@ -63,14 +64,7 @@ public interface QueryIssueDao extends BaseMapper<IssueRecord> {
                                              @Param("startTime") Date startTime,
                                              @Param("endTime") Date endTime);
 
-    /*
-     * 我处理的 ISSUE 列表
-     * */
-    List<IssueRecord> ownerIssueDetails(Page<IssueRecord> page,
-                                       @Param("record") IssueRecord record,
-                                       @Param("userId") Long userId,
-                                       @Param("startTime") Date startTime,
-                                       @Param("endTime") Date endTime);
+
 
     /*
      * OPEN ISSUE 列表
@@ -84,4 +78,9 @@ public interface QueryIssueDao extends BaseMapper<IssueRecord> {
     * ISSUE 详情，包括 ISSUR 处理的  NOTE等所有的关于该 ISSUE 的所有的信息
     * */
     IssueModel issueDetails(@Param("issueId") Long issueId);
+
+
+
+    @Select("update cr_issue set view_num = view_num + 1 where cr_issue.id= #{id}")
+    String res(@Param("id")Long id);
 }

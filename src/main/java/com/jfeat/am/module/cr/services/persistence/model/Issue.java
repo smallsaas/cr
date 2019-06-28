@@ -82,6 +82,12 @@ public class Issue extends Model<Issue> {
 	@TableField("create_time")
 	private Date createTime;
 
+	/**
+	 * 浏览数
+	 */
+	@TableField("view_num")
+	private Integer viewNum;
+
 
 	public Long getId() {
 		return id;
@@ -198,6 +204,15 @@ public class Issue extends Model<Issue> {
 	public Issue setCreateTime(Date createTime) {
 		this.createTime = createTime;
 		return this;
+	}
+
+
+	public Integer getViewNum() {
+		return viewNum;
+	}
+
+	public void setViewNum(Integer viewNum) {
+		this.viewNum = viewNum;
 	}
 
 	public static final String ID = "id";
