@@ -99,6 +99,15 @@ mybatis-plus:
     multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
 
+github:
+  client:
+    clientId: 5c7b966fb08be65d3d03
+    clientSecret: 59dad66564f2bdb6ddb9796b8722fed33021ab4e
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user
 ---
 
 ##########################################################
