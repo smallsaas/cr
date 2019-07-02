@@ -105,8 +105,8 @@ github:
     clientSecret: 59dad66564f2bdb6ddb9796b8722fed33021ab4e
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
-    authSuccessUrl: http://192.168.2.106:8007/
-    authFailureUrl: http://192.168.2.106:8007/register
+    authSuccessUrl: http://192.168.2.106:8007/#/
+    authFailureUrl: http://192.168.2.106:8007/#/register
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://api.github.com/user
