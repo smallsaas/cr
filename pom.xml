@@ -24,7 +24,7 @@
         <jwt-core.version>0.0.1</jwt-core.version>
         <find-password>1.0.1</find-password>
         <sb-log.version>1.0.0</sb-log.version>
-        <skipStandalone>false</skipStandalone>
+        <skipStandalone>true</skipStandalone>
     </properties>
 
     <dependencies>
