@@ -21,7 +21,6 @@
     <properties>
         <crud-plus.version>0.0.6</crud-plus.version>
         <uaas.version>2.0.2</uaas.version>
-        <jwt-core.version>0.0.1</jwt-core.version>
         <find-password>1.0.1</find-password>
         <sb-log.version>1.0.0</sb-log.version>
         <skipStandalone>true</skipStandalone>
@@ -41,39 +40,10 @@
             <version>${find-password}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.jfeat</groupId>-->
-            <!--<artifactId>resource-server-local</artifactId>-->
-            <!--<version>1.0.0</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>com.jfeat</groupId>-->
-            <!--<artifactId>resource-server-dubbo</artifactId>-->
-            <!--<version>1.0.0</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>com.jfeat</groupId>-->
-            <!--<artifactId>sb-log</artifactId>-->
-            <!--<version>${sb-log.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.jfeat</groupId>
             <artifactId>crud-plus</artifactId>
             <version>${crud-plus.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.jfeat</groupId>
-                    <artifactId>jwt-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jfeat</groupId>
-            <artifactId>jwt-core</artifactId>
-            <version>${jwt-core.version}</version>
         </dependency>
 
         <!--spring boot依赖-->
