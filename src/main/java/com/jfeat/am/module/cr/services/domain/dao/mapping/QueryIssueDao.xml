@@ -28,7 +28,6 @@
         left join t_sys_org on t_sys_org.id = cr_issue.org_id
         LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
         LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-        FROM cr_issue
         WHERE 1=1
         <if test="record.id != null and record.id>0 ">
             AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')

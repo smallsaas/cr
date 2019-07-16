@@ -1,34 +1,30 @@
 package com.jfeat.am.module.cr.api.crud;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jfeat.am.core.jwt.JWTKit;
-import com.jfeat.am.core.shiro.ShiroKit;
+import com.jfeat.am.etcd.service.RemoteService;
 import com.jfeat.am.module.cr.services.crud.filter.IssueFilter;
 import com.jfeat.am.module.cr.services.definition.IssueStatus;
+import com.jfeat.am.module.cr.services.domain.dao.QueryIssueDao;
+import com.jfeat.am.module.cr.services.domain.model.IssueRecord;
+import com.jfeat.am.module.cr.services.domain.service.IssueService;
 import com.jfeat.am.module.cr.services.persistence.model.Issue;
 import com.jfeat.am.module.log.annotation.BusinessLog;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.exception.BusinessException;
 import com.jfeat.crud.base.tips.SuccessTip;
 import com.jfeat.crud.base.tips.Tip;
-import com.jfeat.crud.plus.CRUDFilter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.baomidou.mybatisplus.plugins.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.dao.DuplicateKeyException;
-import com.jfeat.am.module.cr.services.domain.dao.QueryIssueDao;
-
-
-import com.jfeat.am.module.cr.services.domain.service.IssueService;
-import com.jfeat.am.module.cr.services.domain.model.IssueRecord;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -99,7 +95,8 @@ public class IssueEndpoint{
     @DeleteMapping("/{id}")
     @ApiOperation("删除 Issue")
     public Tip deleteIssue(@PathVariable Long id) {
-        if (!ShiroKit.hasRole("admin")){
+        SuccessTip tip = new RemoteService().get("uaas", "/api/sys/users/isAdmin", SuccessTip.class);
+        if (tip == null || !(Boolean)tip.getData()){
             throw new BusinessException(5100,"普通用户无法执行管理员操作!");
         }
         return SuccessTip.create(issueService.deleteMaster(id));

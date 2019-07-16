@@ -2,7 +2,6 @@ package com.jfeat.am.module.cr.services.domain.service.impl;
 
 
 import com.jfeat.am.core.jwt.JWTKit;
-import com.jfeat.am.core.support.DateTime;
 import com.jfeat.am.module.cr.services.bean.HandlerRequest;
 import com.jfeat.am.module.cr.services.definition.IssueStatus;
 import com.jfeat.am.module.cr.services.domain.service.HandlerIssueService;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Service
 
@@ -58,7 +58,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
 
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(issue.getStatus());
         note.setIssueId(issue.getId());
@@ -92,7 +92,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
         IssueNote note = new IssueNote();
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(IssueStatus.CLOSED.toString());
         note.setIssueId(issue.getId());
@@ -125,7 +125,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
         IssueNote note = new IssueNote();
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(IssueStatus.DONE.toString());
         note.setIssueId(issue.getId());
@@ -157,7 +157,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
             Issue i = new Issue();
             i.setCreateBy(JWTKit.getUserId());
             i.setCreateByName(JWTKit.getAccount());
-            i.setCreateTime(new DateTime());
+            i.setCreateTime(new Date());
             i.setStatus(IssueStatus.OPEN.toString());
             i.setModuleId(issue.getModuleId());
             i.setNote(issue.getNote());
@@ -172,7 +172,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
             IssueNote note = new IssueNote();
             note.setHandlerId(JWTKit.getUserId());
             note.setHandlerName(JWTKit.getAccount());
-            note.setCreateTime(new DateTime());
+            note.setCreateTime(new Date());
             note.setFromStatus(issue.getStatus());
             note.setToStatus(IssueStatus.OPEN.toString());
             note.setIssueId(issue.getId());
@@ -185,7 +185,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
             IssueNote note = new IssueNote();
             note.setHandlerId(JWTKit.getUserId());
             note.setHandlerName(JWTKit.getAccount());
-            note.setCreateTime(new DateTime());
+            note.setCreateTime(new Date());
             note.setFromStatus(issue.getStatus());
             note.setToStatus(IssueStatus.OPEN.toString());
             note.setIssueId(issue.getId());
@@ -217,7 +217,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
 
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(IssueStatus.NR.toString());
         note.setIssueId(issue.getId());
@@ -247,7 +247,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
 
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(IssueStatus.NFP.toString());
         note.setIssueId(issue.getId());
@@ -277,7 +277,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
 
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(IssueStatus.DEPLICATE.toString());
         note.setIssueId(issue.getId());
@@ -307,7 +307,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
 
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(IssueStatus.NTF.toString());
         note.setIssueId(issue.getId());
@@ -337,7 +337,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
 
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(IssueStatus.FIXED.toString());
         note.setIssueId(issue.getId());
@@ -369,7 +369,7 @@ public class HandlerIssueServiceImpl implements HandlerIssueService {
 
         note.setHandlerId(JWTKit.getUserId());
         note.setHandlerName(JWTKit.getAccount());
-        note.setCreateTime(new DateTime());
+        note.setCreateTime(new Date());
         note.setFromStatus(issue.getStatus());
         note.setToStatus(IssueStatus.OPEN.toString());
         note.setIssueId(issue.getId());
