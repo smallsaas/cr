@@ -1,6 +1,8 @@
 package com.jfeat.am.module.cr.api.crud;
 
+import com.jfeat.am.module.cr.constant.CrPermission;
 import com.jfeat.am.module.cr.services.persistence.model.Module;
+import com.jfeat.common.annotation.Permission;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.exception.BusinessException;
 import com.jfeat.crud.base.tips.SuccessTip;
@@ -51,6 +53,7 @@ public class ModuleEndpoint {
     @BusinessLog(name = "Module", value = "create Module")
     @PostMapping
     @ApiOperation(value = "新建 Module", response = Module.class)
+    @Permission(CrPermission.MODULE_EDIT)
     public Tip createModule(@RequestBody Module entity) {
 
         Integer affected = 0;
@@ -67,6 +70,7 @@ public class ModuleEndpoint {
     @BusinessLog(name = "Module", value = "查看 Module")
     @GetMapping("/{id}")
     @ApiOperation(value = "查看 Module", response = Module.class)
+    @Permission(CrPermission.MODULE_VIEW)
     public Tip getModule(@PathVariable Long id) {
         return SuccessTip.create(moduleService.retrieveMaster(id));
     }
@@ -74,6 +78,7 @@ public class ModuleEndpoint {
     @BusinessLog(name = "Module", value = "update Module")
     @PutMapping("/{id}")
     @ApiOperation(value = "修改 Module", response = Module.class)
+    @Permission(CrPermission.MODULE_EDIT)
     public Tip updateModule(@PathVariable Long id, @RequestBody Module entity) {
         entity.setId(id);
         return SuccessTip.create(moduleService.updateMaster(entity));
@@ -82,13 +87,15 @@ public class ModuleEndpoint {
     @BusinessLog(name = "Module", value = "delete Module")
     @DeleteMapping("/{id}")
     @ApiOperation("删除 Module")
+    @Permission(CrPermission.MODULE_EDIT)
     public Tip deleteModule(@PathVariable Long id) {
         return SuccessTip.create(moduleService.deleteMaster(id));
     }
 
-    @BusinessLog(name = "Module", value = "delete Module")
+    @BusinessLog(name = "Module", value = "list Module")
     @ApiOperation(value = "Module 列表信息", response = ModuleRecord.class)
     @GetMapping
+    @Permission(CrPermission.MODULE_VIEW)
     public Tip queryModules(Page<ModuleRecord> page,
                             @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                             @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,

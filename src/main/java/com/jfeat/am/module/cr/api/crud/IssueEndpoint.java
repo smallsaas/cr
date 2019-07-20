@@ -3,6 +3,7 @@ package com.jfeat.am.module.cr.api.crud;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jfeat.am.core.jwt.JWTKit;
 import com.jfeat.am.etcd.service.RemoteService;
+import com.jfeat.am.module.cr.constant.CrPermission;
 import com.jfeat.am.module.cr.services.crud.filter.IssueFilter;
 import com.jfeat.am.module.cr.services.definition.IssueStatus;
 import com.jfeat.am.module.cr.services.domain.dao.QueryIssueDao;
@@ -10,6 +11,7 @@ import com.jfeat.am.module.cr.services.domain.model.IssueRecord;
 import com.jfeat.am.module.cr.services.domain.service.IssueService;
 import com.jfeat.am.module.cr.services.persistence.model.Issue;
 import com.jfeat.am.module.log.annotation.BusinessLog;
+import com.jfeat.common.annotation.Permission;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.exception.BusinessException;
 import com.jfeat.crud.base.tips.SuccessTip;
@@ -54,6 +56,7 @@ public class IssueEndpoint{
     @BusinessLog(name = "Issue", value = "create Issue")
     @PostMapping
     @ApiOperation(value = "新建 Issue", response = Issue.class)
+    @Permission(CrPermission.ISSUE_EDIT)
     public Tip createIssue(@RequestBody Issue entity) {
         Integer affected = 0;
         try {
@@ -71,6 +74,7 @@ public class IssueEndpoint{
     @BusinessLog(name = "Issue", value = "查看 Issue")
     @GetMapping("/{id}")
     @ApiOperation(value = "查看 Issue", response = Issue.class)
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip getIssue(@PathVariable Long id) {
         // 浏览数加1
         queryIssueDao.res(id);
@@ -80,6 +84,7 @@ public class IssueEndpoint{
     @BusinessLog(name = "Issue", value = "update Issue")
     @PutMapping("/{id}")
     @ApiOperation(value = "修改 Issue", response = Issue.class)
+    @Permission(CrPermission.ISSUE_EDIT)
     public Tip updateIssue(@PathVariable Long id, @RequestBody Issue entity) {
         entity.setId(id);
         IssueFilter filter = new IssueFilter();
@@ -94,8 +99,9 @@ public class IssueEndpoint{
     @BusinessLog(name = "Issue", value = "delete Issue")
     @DeleteMapping("/{id}")
     @ApiOperation("删除 Issue")
+    @Permission(CrPermission.ISSUE_EDIT)
     public Tip deleteIssue(@PathVariable Long id) {
-        SuccessTip tip = new RemoteService().get("uaas", "/api/sys/users/isAdmin", SuccessTip.class);
+        SuccessTip tip = new RemoteService().get("uaas", "/api/sys/users/isAdmin");
         if (tip == null || !(Boolean)tip.getData()){
             throw new BusinessException(5100,"普通用户无法执行管理员操作!");
         }
@@ -105,6 +111,7 @@ public class IssueEndpoint{
     @BusinessLog(name = "Issue", value = "delete Issue")
     @ApiOperation(value = "Issue 列表信息", response = IssueRecord.class)
     @GetMapping
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip queryIssues(Page<IssueRecord> page,
                            @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,

@@ -1,7 +1,9 @@
 package com.jfeat.am.module.cr.api.crud;
 
 import com.jfeat.am.core.jwt.JWTKit;
+import com.jfeat.am.module.cr.constant.CrPermission;
 import com.jfeat.am.module.cr.services.persistence.model.IssueNote;
+import com.jfeat.common.annotation.Permission;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.exception.BusinessException;
 import com.jfeat.crud.base.tips.SuccessTip;
@@ -53,6 +55,7 @@ public class IssueNoteEndpoint {
     @BusinessLog(name = "IssueNote", value = "create IssueNote")
     @PostMapping
     @ApiOperation(value = "新建 IssueNote", response = IssueNote.class)
+    @Permission(CrPermission.ISSUE_NOTE_EDIT)
     public Tip createIssueNote(@RequestBody IssueNote entity) {
         Integer affected = 0;
         try {
@@ -68,6 +71,7 @@ public class IssueNoteEndpoint {
     @BusinessLog(name = "IssueNote", value = "查看 IssueNote")
     @GetMapping("/{id}")
     @ApiOperation(value = "查看 IssueNote", response = IssueNote.class)
+    @Permission(CrPermission.ISSUE_NOTE_VIEW)
     public Tip getIssueNote(@PathVariable Long id) {
         return SuccessTip.create(issueNoteService.retrieveMaster(id));
     }
@@ -76,6 +80,7 @@ public class IssueNoteEndpoint {
     @PutMapping("/{id}")
     @Deprecated
     @ApiOperation(value = "修改 IssueNote", response = IssueNote.class)
+    @Permission(CrPermission.ISSUE_NOTE_EDIT)
     public Tip updateIssueNote(@PathVariable Long id, @RequestBody IssueNote entity) {
         entity.setId(id);
         return SuccessTip.create(issueNoteService.updateMaster(entity));
@@ -84,6 +89,7 @@ public class IssueNoteEndpoint {
     @BusinessLog(name = "IssueNote", value = "delete IssueNote")
     @DeleteMapping("/{id}")
     @ApiOperation("删除 IssueNote")
+    @Permission(CrPermission.ISSUE_NOTE_EDIT)
     public Tip deleteIssueNote(@PathVariable Long id) {
         return SuccessTip.create(issueNoteService.deleteMaster(id));
     }
@@ -91,6 +97,7 @@ public class IssueNoteEndpoint {
     @BusinessLog(name = "IssueNote", value = "delete IssueNote")
     @ApiOperation(value = "IssueNote 列表信息", response = IssueNoteRecord.class)
     @GetMapping
+    @Permission(CrPermission.ISSUE_NOTE_VIEW)
     public Tip queryIssueNotes(Page<IssueNoteRecord> page,
                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,

@@ -1,6 +1,8 @@
 package com.jfeat.am.module.cr.api.crud;
 
+import com.jfeat.am.module.cr.constant.CrPermission;
 import com.jfeat.am.module.cr.services.domain.model.ProjectModel;
+import com.jfeat.common.annotation.Permission;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.exception.BusinessException;
 import com.jfeat.crud.base.tips.SuccessTip;
@@ -49,6 +51,7 @@ public class ProjectEndpoint {
     @BusinessLog(name = "Project", value = "create Project")
     @PostMapping
     @ApiOperation(value = "新建 Project", response = ProjectModel.class)
+    @Permission(CrPermission.PROJECT_EDIT)
     public Tip createProject(@RequestBody ProjectModel entity) {
 
         Integer affected = 0;
@@ -66,6 +69,7 @@ public class ProjectEndpoint {
     @BusinessLog(name = "Project", value = "查看 Project")
     @GetMapping("/{id}")
     @ApiOperation(value = "查看 Project", response = ProjectModel.class)
+    @Permission(CrPermission.PROJECT_VIEW)
     public Tip getProject(@PathVariable Long id) {
         return SuccessTip.create(projectService.retrieveMaster(id, null, null, null).toJSONObject());
     }
@@ -73,6 +77,7 @@ public class ProjectEndpoint {
     @BusinessLog(name = "Project", value = "update Project")
     @PutMapping("/{id}")
     @ApiOperation(value = "修改 Project", response = ProjectModel.class)
+    @Permission(CrPermission.PROJECT_EDIT)
     public Tip updateProject(@PathVariable Long id, @RequestBody ProjectModel entity) {
         entity.setId(id);
         return SuccessTip.create(projectService.updateMaster(entity, null, null, null));
@@ -81,6 +86,7 @@ public class ProjectEndpoint {
     @BusinessLog(name = "Project", value = "delete Project")
     @DeleteMapping("/{id}")
     @ApiOperation("删除 Project")
+    @Permission(CrPermission.PROJECT_EDIT)
     public Tip deleteProject(@PathVariable Long id) {
         return SuccessTip.create(projectService.deleteMaster(id));
     }
@@ -88,6 +94,7 @@ public class ProjectEndpoint {
     @BusinessLog(name = "Project", value = "delete Project")
     @ApiOperation(value = "Project 列表信息", response = ProjectRecord.class)
     @GetMapping
+    @Permission(CrPermission.PROJECT_VIEW)
     public Tip queryProjects(Page<ProjectRecord> page,
                              @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                              @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
