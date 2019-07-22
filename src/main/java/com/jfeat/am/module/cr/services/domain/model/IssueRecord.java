@@ -7,12 +7,12 @@ import com.jfeat.am.module.cr.services.persistence.model.Issue;
  */
 public class IssueRecord extends Issue{
 
-    String moduleName;
-    String orgName;
-    String ownerName;
-    String projectName;
+    private String moduleName;
+    private String orgName;
+    private String ownerName;
+    private String projectName;
 
-    Integer replyNum;
+    private Integer replyNum;
 
     public String getModuleName() {
         return moduleName;

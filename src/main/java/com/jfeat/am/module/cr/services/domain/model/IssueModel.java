@@ -5,7 +5,7 @@ import com.jfeat.am.module.cr.services.persistence.model.IssueNote;
 import java.util.List;
 
 public class IssueModel extends IssueRecord {
-    List<IssueNote> issueNotes;
+    private List<IssueNote> issueNotes;
 
 
     public List<IssueNote> getIssueNotes() {
