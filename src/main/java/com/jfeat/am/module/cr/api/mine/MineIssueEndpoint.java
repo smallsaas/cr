@@ -3,8 +3,10 @@ package com.jfeat.am.module.cr.api.mine;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jfeat.am.core.jwt.JWTKit;
+import com.jfeat.am.module.cr.constant.CrPermission;
 import com.jfeat.am.module.cr.services.domain.dao.MineIssueDao;
 import com.jfeat.am.module.cr.services.domain.model.IssueRecord;
+import com.jfeat.common.annotation.Permission;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.exception.BusinessException;
 import com.jfeat.crud.base.tips.SuccessTip;
@@ -32,6 +34,7 @@ public class MineIssueEndpoint {
 
     @ApiOperation(value = "我的 ISSUE列表", response = IssueRecord.class)
     @GetMapping("/issues")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip ownerIssueDetails(Page<IssueRecord> page,
                                  @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                                  @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
@@ -84,11 +87,13 @@ public class MineIssueEndpoint {
         record.setImageUrl(imageUrl);
         record.setAttachment(attachment);
         record.setStatus(status);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(mineIssueDao.ownerIssueDetails(page, record,JWTKit.getUserId(), startTime,endTime));
         return SuccessTip.create(page);
     }
 
     @GetMapping("/issues/originator")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip originatorIssue(Page<IssueRecord> page,
                          @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                          @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
@@ -140,11 +145,13 @@ public class MineIssueEndpoint {
         record.setImageUrl(imageUrl);
         record.setAttachment(attachment);
         record.setStatus(status);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(mineIssueDao.mineCreateIssue(page, JWTKit.getUserId(),record, startTime,endTime));
         return SuccessTip.create(page);
     }
 
     @GetMapping("/issues/participate")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip openIssue(Page<IssueRecord> page,
                          @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                          @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
@@ -196,6 +203,7 @@ public class MineIssueEndpoint {
         record.setImageUrl(imageUrl);
         record.setAttachment(attachment);
         record.setStatus(status);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(mineIssueDao.mineParticipateIssue(page, JWTKit.getUserId(),record, startTime,endTime));
         return SuccessTip.create(page);
     }
@@ -203,6 +211,7 @@ public class MineIssueEndpoint {
 
     // 待验收
     @GetMapping("/issues/verified")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip verifiedIssue(Page<IssueRecord> page,
                          @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                          @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
@@ -254,6 +263,7 @@ public class MineIssueEndpoint {
         record.setImageUrl(imageUrl);
         record.setAttachment(attachment);
         record.setStatus(status);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(mineIssueDao.mineParticipateIssue(page, JWTKit.getUserId(),record, startTime,endTime));
         return SuccessTip.create(page);
     }

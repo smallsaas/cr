@@ -5,50 +5,50 @@
             cr_issue_note.*
         </sql>
     <select id="findIssueNotePage" resultType="IssueNoteRecord" parameterType="IssueNoteRecord">
-      SELECT cr_issue_note.*
+        SELECT cr_issue_note.*
         FROM cr_issue_note
         WHERE 1=1
-                                <if test="record.id != null and record.id>0 ">
+        <if test="record.id != null and record.id>0 ">
             AND cr_issue_note.id LIKE CONCAT('%',#{record.id},'%')
-            </if>
-                                    
-                                                                                         <if test="record.issueId != null and record.issueId>0 ">
-            AND cr_issue_note.issue_id LIKE CONCAT('%',#{record.issueId},'%')
-            </if>
-                                    
-                                                                                         <if test="record.handlerId != null and record.handlerId>0 ">
-            AND cr_issue_note.handler_id LIKE CONCAT('%',#{record.handlerId},'%')
-            </if>
-                                    
-                                                                                         <if test="record.handlerName != null and record.handlerName!= ''">
-            AND cr_issue_note.handler_name LIKE CONCAT('%',#{record.handlerName},'%')
-            </if>
-                                    
-                                                                                         <if test="record.fromStatus != null and record.fromStatus!= ''">
-            AND cr_issue_note.from_status LIKE CONCAT('%',#{record.fromStatus},'%')
-            </if>
-                                    
-                                                                                         <if test="record.toStatus != null and record.toStatus!= ''">
-            AND cr_issue_note.to_status LIKE CONCAT('%',#{record.toStatus},'%')
-            </if>
-                                <if test="record.note != null and record.note!= ''">
-            AND cr_issue_note.note LIKE CONCAT('%',#{record.note},'%')
-            </if>
-                                    
-                                                                                         <if test="record.imageUrl != null and record.imageUrl!= ''">
-            AND cr_issue_note.image_url LIKE CONCAT('%',#{record.imageUrl},'%')
-            </if>
-                                <if test="record.attachment != null and record.attachment!= ''">
-            AND cr_issue_note.attachment LIKE CONCAT('%',#{record.attachment},'%')
-            </if>
-                                    
-                                                                                         <if test="record.createTime != null and record.createTime>0 ">
-            AND cr_issue_note.create_time LIKE CONCAT('%',#{record.createTime},'%')
-            </if>
-                        <!--
-        <if test="path != null and path != ''">
-            OR cr_issue_note.name LIKE CONCAT('%',#{path},'%')
         </if>
-        -->
+
+        <if test="record.issueId != null and record.issueId>0 ">
+            AND cr_issue_note.issue_id LIKE CONCAT('%',#{record.issueId},'%')
+        </if>
+
+        <if test="record.handlerId != null and record.handlerId>0 ">
+            AND cr_issue_note.handler_id LIKE CONCAT('%',#{record.handlerId},'%')
+        </if>
+
+        <if test="record.handlerName != null and record.handlerName!= ''">
+            AND cr_issue_note.handler_name LIKE CONCAT('%',#{record.handlerName},'%')
+        </if>
+
+        <if test="record.fromStatus != null and record.fromStatus!= ''">
+            AND cr_issue_note.from_status LIKE CONCAT('%',#{record.fromStatus},'%')
+        </if>
+
+        <if test="record.toStatus != null and record.toStatus!= ''">
+            AND cr_issue_note.to_status LIKE CONCAT('%',#{record.toStatus},'%')
+        </if>
+        <if test="record.note != null and record.note!= ''">
+            AND cr_issue_note.note LIKE CONCAT('%',#{record.note},'%')
+        </if>
+
+        <if test="record.imageUrl != null and record.imageUrl!= ''">
+            AND cr_issue_note.image_url LIKE CONCAT('%',#{record.imageUrl},'%')
+        </if>
+        <if test="record.attachment != null and record.attachment!= ''">
+            AND cr_issue_note.attachment LIKE CONCAT('%',#{record.attachment},'%')
+        </if>
+
+        <if test="record.createTime != null and record.createTime>0 ">
+            AND cr_issue_note.create_time LIKE CONCAT('%',#{record.createTime},'%')
+        </if>
+        <!--
+<if test="path != null and path != ''">
+OR cr_issue_note.name LIKE CONCAT('%',#{path},'%')
+</if>
+-->
     </select>
 </mapper>

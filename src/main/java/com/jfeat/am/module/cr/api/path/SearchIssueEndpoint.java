@@ -2,15 +2,21 @@ package com.jfeat.am.module.cr.api.path;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.jfeat.am.core.jwt.JWTKit;
+import com.jfeat.am.module.cr.constant.CrPermission;
 import com.jfeat.am.module.cr.services.domain.dao.QueryIssueDao;
 import com.jfeat.am.module.cr.services.domain.model.IssueRecord;
+import com.jfeat.common.annotation.Permission;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.exception.BusinessException;
 import com.jfeat.crud.base.tips.SuccessTip;
 import com.jfeat.crud.base.tips.Tip;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -37,6 +43,7 @@ public class SearchIssueEndpoint {
 
     @ApiOperation(value = "我的 ISSUE列表", response = IssueRecord.class)
     @GetMapping("/open/issues")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip openIssue(Page<IssueRecord> page,
                          @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
                          @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
@@ -89,12 +96,14 @@ public class SearchIssueEndpoint {
         record.setImageUrl(imageUrl);
         record.setAttachment(attachment);
         record.setStatus(status);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(queryIssueDao.openIssue(page, record, startTime,endTime));
         return SuccessTip.create(page);
     }
 
     @ApiOperation(value = "单个项目的 ISSUE列表  参数为 项目的ID", response = IssueRecord.class)
     @GetMapping("/issue/issues/path/project/{projectId}")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip queryIssues(Page<IssueRecord> page,
                            @PathVariable Long projectId,
                            @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
@@ -154,6 +163,7 @@ public class SearchIssueEndpoint {
         record.setAttachment(attachment);
         record.setStatus(status);
         record.setOwnerId(ownerId);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(queryIssueDao.projectIssueDetails(page, record,projectId, startTime,endTime));
         return SuccessTip.create(page);
     }
@@ -161,6 +171,7 @@ public class SearchIssueEndpoint {
 
     @ApiOperation(value = "指定模块 ISSUE列表 参数为 木块的ID", response = IssueRecord.class)
     @GetMapping("/issue/issues/path/module/{moduleId}")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip moduleIssueDetails(Page<IssueRecord> page,
                            @PathVariable Long moduleId,
                            @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
@@ -218,12 +229,14 @@ public class SearchIssueEndpoint {
         record.setAttachment(attachment);
         record.setStatus(status);
         record.setOwnerId(ownerId);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(queryIssueDao.moduleIssueDetails(page, record,moduleId, startTime,endTime));
         return SuccessTip.create(page);
     }
 
     @ApiOperation(value = "指定部门的 ISSUE列表", response = IssueRecord.class)
     @GetMapping("/issue/issues/path/org/{orgId}")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip orgIssueDetails(Page<IssueRecord> page,
                                   @PathVariable Long orgId,
                                   @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
@@ -279,12 +292,14 @@ public class SearchIssueEndpoint {
         record.setAttachment(attachment);
         record.setStatus(status);
         record.setOwnerId(ownerId);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(queryIssueDao.orgIssueDetails(page, record,orgId, startTime,endTime));
         return SuccessTip.create(page);
     }
 
     @ApiOperation(value = "指定部门的下属部门(包含本部门) ISSUE列表", response = IssueRecord.class)
     @GetMapping("/issue/issues/path/org/kids/{orgId}")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip orgAndKidsIssueDetails(Page<IssueRecord> page,
                                @PathVariable Long orgId,
                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
@@ -340,12 +355,14 @@ public class SearchIssueEndpoint {
         record.setAttachment(attachment);
         record.setStatus(status);
         record.setOwnerId(ownerId);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(queryIssueDao.orgAndKidsIssueDetails(page, record,orgId, startTime,endTime));
         return SuccessTip.create(page);
     }
 
     @ApiOperation(value = "指定部门的下属部门(不包含本部门) ISSUE列表", response = IssueRecord.class)
     @GetMapping("/issue/issues/path/kids/{orgId}")
+    @Permission(CrPermission.ISSUE_VIEW)
     public Tip kidsIssueDetails(Page<IssueRecord> page,
                                       @PathVariable Long orgId,
                                       @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum,
@@ -401,6 +418,7 @@ public class SearchIssueEndpoint {
         record.setAttachment(attachment);
         record.setStatus(status);
         record.setOwnerId(ownerId);
+        record.setOrgId(JWTKit.getOrgId());
         page.setRecords(queryIssueDao.kidsIssueDetails(page, record,orgId, startTime,endTime));
         return SuccessTip.create(page);
     }

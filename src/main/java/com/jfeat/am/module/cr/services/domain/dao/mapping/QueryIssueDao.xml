@@ -5,6 +5,57 @@
         cr_issue.*
     </sql>
 
+    <sql id="Common_Condition">
+        <if test="record.id != null and record.id>0 ">
+            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
+        </if>
+        <if test="record.moduleId != null and record.moduleId>0 ">
+            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
+        </if>
+        <if test="record.moduleName != null and record.moduleName!= ''">
+            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
+        </if>
+        <if test="record.orgId != null and record.orgId>0 ">
+            AND cr_issue.org_id LIKE CONCAT('%',#{record.orgId},'%')
+        </if>
+        <if test="record.createBy != null and record.createBy>0 ">
+            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
+        </if>
+        <if test="record.createByName != null and record.createByName!= ''">
+            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
+        </if>
+        <if test="record.title != null and record.title!= ''">
+            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
+        </if>
+        <if test="record.note != null and record.note!= ''">
+            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
+        </if>
+        <if test="record.priority != null and record.priority!= ''">
+            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
+        </if>
+        <if test="record.status != null and record.status>0 ">
+            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
+        </if>
+        <if test="record.ownerId != null and record.ownerId>0 ">
+            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
+        </if>
+        <if test="record.projectName != null and record.projectName!= ''">
+            AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
+        </if>
+        <if test="startTime != null and endTime != null">
+            <![CDATA[
+       AND cr_issue.create_time >= date(#{startTime}) AND
+           cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
+            ]]>
+        </if>
+        <!--        <if test="record.ownerName != null and record.ownerName!= ''">-->
+        <!--            AND t_sys_user.account LIKE CONCAT('%',#{record.ownerName},'%')-->
+        <!--        </if>-->
+        <!--        <if test="record.orgName != null and record.orgName!= ''">-->
+        <!--            AND t_sys_org.name LIKE CONCAT('%',#{record.orgName},'%')-->
+        <!--        </if>-->
+    </sql>
+
     <!--所有的ISSUE，通过 ISSUE 的任何一个字段来索引-->
     <select id="findIssuePage" resultType="IssueRecord" parameterType="IssueRecord">
         SELECT cr_issue.*,
@@ -21,469 +72,162 @@
 
         cr_module.module_name as moduleName,
         cr_project.project_name as projectName,
-        t_sys_org.name as orgName,
-        t_sys_user.account as ownerName
-        from cr_issue
-        left join t_sys_user on t_sys_user.id = cr_issue.owner_id
-        left join t_sys_org on t_sys_org.id = cr_issue.org_id
-        LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
-        LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-        WHERE 1=1
-        <if test="record.id != null and record.id>0 ">
-            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
-        </if>
+    <!--t_sys_org.name as orgName,-->
+    <!--t_sys_user.account as ownerName-->
+    from cr_issue
+    <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
+    <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
+    LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+    LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+    WHERE 1=1
+    <include refid="Common_Condition"/>
+    order by cr_issue.priority DESC,cr_issue.create_time DESC,replyNum DESC,cr_issue.view_num Desc
+</select>
 
-        <if test="record.moduleId != null and record.moduleId>0 ">
-            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
-        </if>
-        <if test="record.moduleName != null and record.moduleName!= ''">
-            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
-        </if>
-
-        <if test="record.orgId != null and record.orgId>0 ">
-            AND cr_issue.org_id LIKE CONCAT('%',#{record.orgId},'%')
-        </if>
-
-        <if test="record.orgName != null and record.orgName!= ''">
-            AND t_sys_org.name LIKE CONCAT('%',#{record.orgName},'%')
-        </if>
-
-        <if test="record.createBy != null and record.createBy>0 ">
-            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
-        </if>
-
-        <if test="record.createByName != null and record.createByName!= ''">
-            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
-        </if>
-        <if test="record.title != null and record.title!= ''">
-            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
-        </if>
-        <if test="record.note != null and record.note!= ''">
-            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
-        </if>
-        <if test="record.priority != null and record.priority!= ''">
-            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
-        </if>
-        <if test="record.status != null and record.status>0 ">
-            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
-        </if>
-
-        <if test="record.ownerId != null and record.ownerId>0 ">
-            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
-        </if>
-
-        <if test="record.ownerName != null and record.ownerName!= ''">
-            AND t_sys_user.account LIKE CONCAT('%',#{record.ownerName},'%')
-        </if>
-
-
-        <if test="record.projectName != null and record.projectName!= ''">
-            AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
-        </if>
-        <if test="startTime != null and endTime != null">
-            <![CDATA[
-       AND cr_issue.create_time >= date(#{startTime}) AND
-           cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
-            ]]>
-        </if>
-        order by cr_issue.priority DESC,cr_issue.create_time DESC,replyNum DESC,cr_issue.view_num Desc
-    </select>
-
-    <!-- 单个项目的 ISSUE列表  参数为 项目的ID-->
+<!-- 单个项目的 ISSUE列表  参数为 项目的ID-->
     <select id="projectIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
-            cr_issue.*,
-            cr_module.module_name as moduleName,
-            t_sys_org.name as orgName,
-            t_sys_user.account as ownerName
-        from cr_issue
-            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
-            left join t_sys_org on t_sys_org.id = cr_issue.org_id
-            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
-        WHERE cr_issue.module_id in (
-            SELECT cr_module.id
-            FROM cr_module
-            left join cr_project on cr_project.id = cr_module.project_id
-            WHERE cr_project.id = #{projectId}
-        )
-        <if test="record.id != null and record.id>0 ">
-            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
-        </if>
+        cr_issue.*,
+        cr_module.module_name as moduleName,
+    <!--t_sys_org.name as orgName,-->
+    <!--t_sys_user.account as ownerName-->
+    from cr_issue
+    <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
+    <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
+    LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+    LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+    WHERE WHERE cr_project.id = #{projectId}
 
-        <if test="record.moduleId != null and record.moduleId>0 ">
-            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
-        </if>
-        <if test="record.moduleName != null and record.moduleName!= ''">
-            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
-        </if>
+    <include refid="Common_Condition"/>
+    order by cr_issue.priority DESC,cr_issue.create_time DESC
+</select>
 
-        <if test="record.orgId != null and record.orgId>0 ">
-            AND cr_issue.org_id LIKE CONCAT('%',#{record.orgId},'%')
-        </if>
-
-        <if test="record.orgName != null and record.orgName!= '' ">
-            AND t_sys_org.name LIKE CONCAT('%',#{record.orgName},'%')
-        </if>
-
-        <if test="record.createBy != null and record.createBy>0 ">
-            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
-        </if>
-
-        <if test="record.createByName != null and record.createByName!= ''">
-            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
-        </if>
-        <if test="record.title != null and record.title!= ''">
-            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
-        </if>
-        <if test="record.note != null and record.note!= ''">
-            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
-        </if>
-        <if test="record.priority != null and record.priority!= ''">
-            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
-        </if>
-        <if test="record.status != null and record.status>0 ">
-            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
-        </if>
-
-        <if test="record.ownerId != null and record.ownerId>0 ">
-            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
-        </if>
-
-        <if test="record.ownerName != null and record.ownerName!= ''">
-            AND t_sys_user.account LIKE CONCAT('%',#{record.ownerName},'%')
-        </if>
-
-        <if test="startTime != null and endTime != null">
-            <![CDATA[
-       AND cr_issue.create_time >= date(#{startTime}) AND
-           cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
-            ]]>
-        </if>
-        order by cr_issue.priority DESC,cr_issue.create_time DESC
-    </select>
-
-    <!-- 指定模块 ISSUE列表 参数为 木块的ID-->
+<!-- 指定模块 ISSUE列表 参数为 木块的ID-->
     <select id="moduleIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
-            cr_issue.*,
-            cr_module.module_name as moduleName,
-            cr_project.project_name as projectName,
-            t_sys_org.name as orgName,
-            t_sys_user.account as ownerName
-        from cr_issue
-            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
-            left join t_sys_org on t_sys_org.id = cr_issue.org_id
-            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
-            LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-        WHERE cr_issue.module_id #{moduleId}
-        <if test="record.id != null and record.id>0 ">
-            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
-        </if>
+        cr_issue.*,
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName,
+    <!--t_sys_org.name as orgName,-->
+    <!--t_sys_user.account as ownerName-->
+    from cr_issue
+    <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
+    <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
+    LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+    LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+    WHERE cr_issue.module_id #{moduleId}
+    <include refid="Common_Condition"/>
+    order by cr_issue.priority DESC,cr_issue.create_time DESC
+</select>
 
 
-        <if test="record.orgId != null and record.orgId>0 ">
-            AND cr_issue.org_id LIKE CONCAT('%',#{record.orgId},'%')
-        </if>
-
-        <if test="record.orgName != null and record.orgName!= '' ">
-            AND t_sys_org.name LIKE CONCAT('%',#{record.orgName},'%')
-        </if>
-
-        <if test="record.createBy != null and record.createBy>0 ">
-            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
-        </if>
-
-        <if test="record.createByName != null and record.createByName!= ''">
-            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
-        </if>
-        <if test="record.title != null and record.title!= ''">
-            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
-        </if>
-        <if test="record.note != null and record.note!= ''">
-            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
-        </if>
-        <if test="record.priority != null and record.priority!= ''">
-            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
-        </if>
-        <if test="record.status != null and record.status>0 ">
-            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
-        </if>
-
-        <if test="record.ownerId != null and record.ownerId>0 ">
-            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
-        </if>
-
-        <if test="record.ownerName != null and record.ownerName!= ''">
-            AND t_sys_user.account LIKE CONCAT('%',#{record.ownerName},'%')
-        </if>
-
-        <if test="startTime != null and endTime != null">
-            <![CDATA[
-       AND cr_issue.create_time >= date(#{startTime}) AND
-           cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
-            ]]>
-        </if>
-        order by cr_issue.priority DESC,cr_issue.create_time DESC
-    </select>
-
-
-    <!-- 指定部门的 ISSUE列表-->
+<!-- 指定部门的 ISSUE列表-->
     <select id="orgIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
-            cr_issue.*,
-            cr_module.module_name as moduleName,
-            cr_project.project_name as projectName,
-            t_sys_org.name as orgName,
-            t_sys_user.account as ownerName
-        from cr_issue
-            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
-            left join t_sys_org on t_sys_org.id = cr_issue.org_id
-            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
-            LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-        WHERE t_sys_org.id.id = #{orgId}
-        <if test="record.id != null and record.id>0 ">
-            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
-        </if>
-
-        <if test="record.moduleId != null and record.moduleId>0 ">
-            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
-        </if>
-        <if test="record.moduleName != null and record.moduleName!= ''">
-            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
-        </if>
-
-        <if test="record.projectName != null and record.projectName!= ''">
-            AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
-        </if>
-
-        <if test="record.projectId != null and record.projectId>0 ">
-            AND cr_project.id LIKE CONCAT('%',#{record.projectId},'%')
-        </if>
-
-        <if test="record.createBy != null and record.createBy>0 ">
-            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
-        </if>
-
-        <if test="record.createByName != null and record.createByName!= ''">
-            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
-        </if>
-        <if test="record.title != null and record.title!= ''">
-            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
-        </if>
-        <if test="record.note != null and record.note!= ''">
-            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
-        </if>
-        <if test="record.priority != null and record.priority!= ''">
-            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
-        </if>
-        <if test="record.status != null and record.status>0 ">
-            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
-        </if>
-
-        <if test="record.ownerId != null and record.ownerId>0 ">
-            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
-        </if>
-
-        <if test="record.ownerName != null and record.ownerName!= ''">
-            AND t_sys_user.account LIKE CONCAT('%',#{record.ownerName},'%')
-        </if>
-
-        <if test="startTime != null and endTime != null">
-            <![CDATA[
-       AND cr_issue.create_time >= date(#{startTime}) AND
-           cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
-            ]]>
-        </if>
-        order by cr_issue.priority DESC,cr_issue.create_time DESC
-    </select>
-    <!-- 指定部门的下属部门(包含本部门) ISSUE列表-->
+        cr_issue.*,
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName,
+    <!--t_sys_org.name as orgName,-->
+    <!--t_sys_user.account as ownerName-->
+    from cr_issue
+    <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
+    <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
+    LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+    LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+    WHERE 1=1
+--         AND t_sys_org.id.id = #{orgId}
+    <include refid="Common_Condition"/>
+    order by cr_issue.priority DESC,cr_issue.create_time DESC
+</select>
+<!-- 指定部门的下属部门(包含本部门) ISSUE列表-->
     <select id="orgAndKidsIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
-            cr_issue.*,
-            cr_module.module_name as moduleName,
-            cr_project.project_name as projectName,
-            children.name as orgName,
-            t_sys_user.account as ownerName
-        from cr_issue
-            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
-            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
-            LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-            LEFT JOIN t_sys_org children on cr_issue.org_id = children.id
-        WHERE cr_issue.org_id in (
-            SELECT
-            children.id
-            FROM
-            t_sys_org,
-            t_sys_org AS children
-            WHERE
-            t_sys_org.left_num &lt;=
+        cr_issue.*,
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName,
+        children.name as orgName,
+    <!--t_sys_user.account as ownerName-->
+    from cr_issue
+    <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
+    LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+    LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+    <!--LEFT JOIN t_sys_org children on cr_issue.org_id = children.id-->
+    WHERE 1=1
+    AND cr_issue.org_id = #{orgId}
+    <!--AND cr_issue.org_id in (
+    SELECT
+    children.id
+    FROM
+    t_sys_org,
+    t_sys_org AS children
+    WHERE
+    t_sys_org.left_num &lt;=
 
-            children.left_num
-            AND t_sys_org.right_num >= children.left_num
-            AND t_sys_org.id = #{orgId}
-        )
+    children.left_num
+    AND t_sys_org.right_num >= children.left_num
+    AND t_sys_org.id = #{orgId}
+    )-->
+    <include refid="Common_Condition"/>
 
-        <if test="record.id != null and record.id>0 ">
-            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
-        </if>
+    order by
+    <!--t_sys_org.node_level ASC,-->
+cr_issue.priority DESC,cr_issue.create_time DESC
+</select>
 
-        <if test="record.moduleId != null and record.moduleId>0 ">
-            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
-        </if>
-        <if test="record.moduleName != null and record.moduleName!= ''">
-            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
-        </if>
-
-        <if test="record.projectName != null and record.projectName!= ''">
-            AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
-        </if>
-
-        <if test="record.projectId != null and record.projectId>0 ">
-            AND cr_project.id LIKE CONCAT('%',#{record.projectId},'%')
-        </if>
-
-        <if test="record.createBy != null and record.createBy>0 ">
-            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
-        </if>
-
-        <if test="record.createByName != null and record.createByName!= ''">
-            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
-        </if>
-        <if test="record.title != null and record.title!= ''">
-            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
-        </if>
-        <if test="record.note != null and record.note!= ''">
-            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
-        </if>
-        <if test="record.priority != null and record.priority!= ''">
-            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
-        </if>
-        <if test="record.status != null and record.status>0 ">
-            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
-        </if>
-
-        <if test="record.ownerId != null and record.ownerId>0 ">
-            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
-        </if>
-
-        <if test="record.ownerName != null and record.ownerName= ''">
-            AND t_sys_user.account LIKE CONCAT('%',#{record.ownerName},'%')
-        </if>
-
-        <if test="startTime != null and endTime != null">
-            <![CDATA[
-       AND cr_issue.create_time >= date(#{startTime}) AND
-           cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
-            ]]>
-        </if>
-
-        order by t_sys_org.node_level ASC,cr_issue.priority DESC,cr_issue.create_time DESC
-    </select>
-
-    <!-- 指定部门的下属部门(不包含本部门) ISSUE列表-->
+<!-- 指定部门的下属部门(不包含本部门) ISSUE列表-->
     <select id="kidsIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
-            cr_issue.*,
-            cr_module.module_name as moduleName,
-            cr_project.project_name as projectName,
-            children.name as orgName,
-            t_sys_user.account as ownerName
-        from cr_issue
-            left join t_sys_user on t_sys_user.id = cr_issue.owner_id
-            LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
-            LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-            LEFT JOIN t_sys_org children on cr_issue.org_id = children.id
-        WHERE cr_issue.org_id in (
-            SELECT
-                children.id
-            FROM
-                t_sys_org,
-                t_sys_org AS children
-            WHERE
-                (t_sys_org.left_num &lt; children.left_num
-                AND t_sys_org.right_num &gt; children.left_num)
-            AND t_sys_org.id = #{orgId}
-        )
-        <if test="record.id != null and record.id>0 ">
-            AND cr_issue.id LIKE CONCAT('%',#{record.id},'%')
-        </if>
+        cr_issue.*,
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName,
+        children.name as orgName,
+    <!--t_sys_user.account as ownerName-->
+    from cr_issue
+    <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
+    LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+    LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+    <!--LEFT JOIN t_sys_org children on cr_issue.org_id = children.id-->
+    WHERE 1=1
+    AND cr_issue.org_id = #{orgId}
+    <!--AND cr_issue.org_id in (
+    SELECT
+    children.id
+    FROM
+    t_sys_org,
+    t_sys_org AS children
+    WHERE
+    (t_sys_org.left_num &lt; children.left_num
+    AND t_sys_org.right_num &gt; children.left_num)
+    AND t_sys_org.id = #{orgId}
+    )-->
+    <include refid="Common_Condition"/>
 
-        <if test="record.moduleId != null and record.moduleId>0 ">
-            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
-        </if>
-        <if test="record.moduleName != null and record.moduleName!= ''">
-            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
-        </if>
-
-        <if test="record.projectName != null and record.projectName!= ''">
-            AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
-        </if>
-
-        <if test="record.projectId != null and record.projectId>0 ">
-            AND cr_project.id LIKE CONCAT('%',#{record.projectId},'%')
-        </if>
-
-        <if test="record.createBy != null and record.createBy>0 ">
-            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
-        </if>
-
-        <if test="record.createByName != null and record.createByName!= ''">
-            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
-        </if>
-        <if test="record.title != null and record.title!= ''">
-            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
-        </if>
-        <if test="record.note != null and record.note!= ''">
-            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
-        </if>
-        <if test="record.priority != null and record.priority!= ''">
-            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
-        </if>
-        <if test="record.status != null and record.status>0 ">
-            AND cr_issue.status LIKE CONCAT('%',#{record.status},'%')
-        </if>
-
-        <if test="record.ownerId != null and record.ownerId>0 ">
-            AND cr_issue.owner_id LIKE CONCAT('%',#{record.ownerId},'%')
-        </if>
-
-        <if test="record.ownerName != null and record.ownerName= ''">
-            AND t_sys_user.account LIKE CONCAT('%',#{record.ownerName},'%')
-        </if>
-
-        <if test="startTime != null and endTime != null">
-            <![CDATA[
-       AND cr_issue.create_time >= date(#{startTime}) AND
-           cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
-            ]]>
-        </if>
-
-        order by t_sys_org.node_level ASC,cr_issue.priority DESC,cr_issue.create_time DESC
-    </select>
+    order by
+    <!--t_sys_org.node_level ASC,-->
+cr_issue.priority DESC,cr_issue.create_time DESC
+</select>
 
 
-
-
-    <!-- ISSUE 详情，包括 ISSUR 处理的  NOTE等所有的关于该 ISSUE 的所有的信息-->
+<!-- ISSUE 详情，包括 ISSUR 处理的  NOTE等所有的关于该 ISSUE 的所有的信息-->
     <resultMap id="IssueModel" type="com.jfeat.am.module.cr.services.domain.model.IssueModel">
-        <id column="id" property="id" />
-        <result column="module_id" property="moduleId" />
-        <result column="org_id" property="orgId" />
-        <result column="create_by" property="createBy" />
-        <result column="create_by_name" property="createByName" />
-        <result column="title" property="title" />
-        <result column="note" property="note" />
-        <result column="priority" property="priority" />
-        <result column="image_url" property="imageUrl" />
-        <result column="attachment" property="attachment" />
-        <result column="status" property="status" />
-        <result column="owner_id" property="ownerId" />
-        <result column="moduleName" property="moduleName" />
-        <result column="orgName" property="orgName" />
-        <result column="ownerName" property="ownerName" />
-        <result column="projectName" property="projectName" />
-        <result column="create_time" property="createTime" />
-        <result column="view_num" property="viewNum" />
+        <id column="id" property="id"/>
+        <result column="module_id" property="moduleId"/>
+        <result column="org_id" property="orgId"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_by_name" property="createByName"/>
+        <result column="title" property="title"/>
+        <result column="note" property="note"/>
+        <result column="priority" property="priority"/>
+        <result column="image_url" property="imageUrl"/>
+        <result column="attachment" property="attachment"/>
+        <result column="status" property="status"/>
+        <result column="owner_id" property="ownerId"/>
+        <result column="moduleName" property="moduleName"/>
+        <result column="orgName" property="orgName"/>
+        <result column="ownerName" property="ownerName"/>
+        <result column="projectName" property="projectName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="view_num" property="viewNum"/>
 
 
         <collection property="issueNotes"
@@ -496,18 +240,19 @@
         SELECT cr_issue.*,
         cr_module.module_name as moduleName,
         cr_project.project_name as projectName,
-        t_sys_org.name as orgName,
-        t_sys_user.account as ownerName
-        FROM cr_issue
-        left join t_sys_user on t_sys_user.id = cr_issue.owner_id
-        left join t_sys_org on t_sys_org.id = cr_issue.org_id
-        LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
-        LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-        WHERE 1=1
-        and cr_issue.id = #{issueId}
-    </select>
-    <!--collection Master 传入的ID的 ISSUE 的所有的处理意见-->
-    <select id="issueNotes" parameterType="long" resultType="com.jfeat.am.module.cr.services.persistence.model.IssueNote">
+    <!--t_sys_org.name as orgName,-->
+    <!--t_sys_user.account as ownerName-->
+    FROM cr_issue
+        <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
+        <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
+    LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
+    LEFT JOIN cr_project on cr_project.id = cr_module.project_id
+    WHERE 1=1
+    and cr_issue.id = #{issueId}
+</select>
+<!--collection Master 传入的ID的 ISSUE 的所有的处理意见-->
+    <select id="issueNotes" parameterType="long"
+            resultType="com.jfeat.am.module.cr.services.persistence.model.IssueNote">
         SELECT cr_issue_note.*
         FROM cr_issue_note
         LEFT JOIN cr_issue on cr_issue.id = cr_issue_note.issue_id
@@ -521,7 +266,7 @@
         cr_issue.*,
         cr_module.module_name as moduleName,
         cr_project.project_name as projectName,
-        t_sys_org.name as orgName ,
+        <!--t_sys_org.name as orgName ,-->
         (
         SELECT
         count(*)
@@ -532,55 +277,16 @@
         ) AS replyNum
 
         from cr_issue
-        left join t_sys_org on t_sys_org.id = cr_issue.org_id
+        <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
         LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
         LEFT JOIN cr_project on cr_project.id = cr_module.project_id
-        WHERE (ISNULL(cr_issue.owner_id) or  cr_issue.owner_id = '')
+        WHERE (ISNULL(cr_issue.owner_id) or cr_issue.owner_id = '')
 
         and (cr_issue.status != 'DONE' or cr_issue.status != 'CLOSED')
 
-
-        <if test="record.moduleId != null and record.moduleId>0 ">
-            AND cr_issue.module_id LIKE CONCAT('%',#{record.moduleId},'%')
-        </if>
-        <if test="record.moduleName != null and record.moduleName!= ''">
-            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
-        </if>
-
-        <if test="record.projectName != null and record.projectName!= ''">
-            AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
-        </if>
-
-        <if test="record.createBy != null and record.createBy>0 ">
-            AND cr_issue.create_by LIKE CONCAT('%',#{record.createBy},'%')
-        </if>
-
-        <if test="record.createByName != null and record.createByName!= ''">
-            AND cr_issue.create_by_name LIKE CONCAT('%',#{record.createByName},'%')
-        </if>
-        <if test="record.title != null and record.title!= ''">
-            AND cr_issue.title LIKE CONCAT('%',#{record.title},'%')
-        </if>
-        <if test="record.note != null and record.note!= ''">
-            AND cr_issue.note LIKE CONCAT('%',#{record.note},'%')
-        </if>
-        <if test="record.priority != null and record.priority!= ''">
-            AND cr_issue.priority LIKE CONCAT('%',#{record.priority},'%')
-        </if>
-        <if test="record.status != null and record.status!='' ">
-            AND cr_issue.status = #{record.status}
-        </if>
-
-        <if test="startTime != null and endTime != null">
-            <![CDATA[
-       AND cr_issue.create_time >= date(#{startTime}) AND
-           cr_issue.create_time < DATE_ADD(date(#{endTime}),INTERVAL 1 DAY)
-            ]]>
-        </if>
+        <include refid="Common_Condition"/>
         order by cr_issue.priority DESC,cr_issue.create_time DESC
     </select>
-
-
 
 
 </mapper>

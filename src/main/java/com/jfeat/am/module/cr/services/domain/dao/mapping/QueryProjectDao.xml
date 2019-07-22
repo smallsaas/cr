@@ -5,31 +5,31 @@
             cr_project.*
         </sql>
     <select id="findProjectPage" resultType="ProjectRecord" parameterType="ProjectRecord">
-      SELECT cr_project.*
+        SELECT cr_project.*
         FROM cr_project
         WHERE 1=1
-                                <if test="record.id != null and record.id>0 ">
+        <if test="record.id != null and record.id>0 ">
             AND cr_project.id LIKE CONCAT('%',#{record.id},'%')
-            </if>
-                                    
-                                                                                         <if test="record.orgId != null and record.orgId>0 ">
-            AND cr_project.org_id LIKE CONCAT('%',#{record.orgId},'%')
-            </if>
-                                    
-                                                                                         <if test="record.projectName != null and record.projectName!= ''">
-            AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
-            </if>
-                                <if test="record.note != null and record.note!= ''">
-            AND cr_project.note LIKE CONCAT('%',#{record.note},'%')
-            </if>
-                                    
-                                                                                         <if test="record.createTime != null and record.createTime>0 ">
-            AND cr_project.create_time LIKE CONCAT('%',#{record.createTime},'%')
-            </if>
-                        <!--
-        <if test="path != null and path != ''">
-            OR cr_project.name LIKE CONCAT('%',#{path},'%')
         </if>
-        -->
+
+        <if test="record.orgId != null and record.orgId>0 ">
+            AND cr_project.org_id LIKE CONCAT('%',#{record.orgId},'%')
+        </if>
+
+        <if test="record.projectName != null and record.projectName!= ''">
+            AND cr_project.project_name LIKE CONCAT('%',#{record.projectName},'%')
+        </if>
+        <if test="record.note != null and record.note!= ''">
+            AND cr_project.note LIKE CONCAT('%',#{record.note},'%')
+        </if>
+
+        <if test="record.createTime != null and record.createTime>0 ">
+            AND cr_project.create_time LIKE CONCAT('%',#{record.createTime},'%')
+        </if>
+        <!--
+<if test="path != null and path != ''">
+OR cr_project.name LIKE CONCAT('%',#{path},'%')
+</if>
+-->
     </select>
 </mapper>

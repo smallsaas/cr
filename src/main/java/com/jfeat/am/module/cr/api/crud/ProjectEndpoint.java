@@ -1,29 +1,30 @@
 package com.jfeat.am.module.cr.api.crud;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.jfeat.am.core.jwt.JWTKit;
 import com.jfeat.am.module.cr.constant.CrPermission;
+import com.jfeat.am.module.cr.services.domain.dao.QueryProjectDao;
 import com.jfeat.am.module.cr.services.domain.model.ProjectModel;
+import com.jfeat.am.module.cr.services.domain.model.ProjectRecord;
+import com.jfeat.am.module.cr.services.domain.service.ProjectService;
+import com.jfeat.am.module.log.annotation.BusinessLog;
 import com.jfeat.common.annotation.Permission;
 import com.jfeat.crud.base.exception.BusinessCode;
 import com.jfeat.crud.base.exception.BusinessException;
 import com.jfeat.crud.base.tips.SuccessTip;
 import com.jfeat.crud.base.tips.Tip;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.baomidou.mybatisplus.plugins.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.dao.DuplicateKeyException;
-import com.jfeat.am.module.cr.services.domain.dao.QueryProjectDao;
-import com.jfeat.am.module.log.annotation.BusinessLog;
-import com.jfeat.am.module.cr.services.domain.service.ProjectService;
-import com.jfeat.am.module.cr.services.domain.model.ProjectRecord;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.annotation.Resource;
 import java.util.Date;
 
@@ -100,7 +101,6 @@ public class ProjectEndpoint {
                              @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
                              @RequestParam(name = "path", required = false) String search,
                              @RequestParam(name = "id", required = false) Long id,
-                             @RequestParam(name = "orgId", required = false) Long orgId,
                              @RequestParam(name = "projectName", required = false) String projectName,
                              @RequestParam(name = "note", required = false) String note,
                              @RequestParam(name = "createTime", required = false) Date createTime,
@@ -122,7 +122,7 @@ public class ProjectEndpoint {
 
         ProjectRecord record = new ProjectRecord();
         record.setId(id);
-        record.setOrgId(orgId);
+        record.setOrgId(JWTKit.getOrgId());
         record.setProjectName(projectName);
         record.setNote(note);
         record.setCreateTime(createTime);

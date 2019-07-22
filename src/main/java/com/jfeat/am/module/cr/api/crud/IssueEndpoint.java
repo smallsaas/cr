@@ -118,7 +118,6 @@ public class IssueEndpoint{
                            @RequestParam(name = "path", required = false) String search,
                            @RequestParam(name = "id", required = false) Long id,
                            @RequestParam(name = "moduleId", required = false) Long moduleId,
-                           @RequestParam(name = "orgId", required = false) Long orgId,
                            @RequestParam(name = "createBy", required = false) Long createBy,
                            @RequestParam(name = "createByName", required = false) String createByName,
                            @RequestParam(name = "title", required = false) String title,
@@ -131,7 +130,7 @@ public class IssueEndpoint{
                            @RequestParam(name = "moduleName", required = false) String moduleName,
                            @RequestParam(name = "orgName", required = false) String orgName,
                            @RequestParam(name = "projectName", required = false) String projectName,
-                           @RequestParam(name = "orgName", required = false) String ownerName,
+                           @RequestParam(name = "ownerName", required = false) String ownerName,
                            @RequestParam(name = "createTime", required = false) Date[] createTime,
                            @RequestParam(name = "orderBy", required = false) String orderBy,
                            @RequestParam(name = "sort", required = false) String sort) {
@@ -160,7 +159,7 @@ public class IssueEndpoint{
         record.setProjectName(projectName);
         record.setId(id);
         record.setModuleId(moduleId);
-        record.setOrgId(orgId);
+        record.setOrgId(JWTKit.getOrgId());
         record.setCreateBy(createBy);
         record.setCreateByName(createByName);
         record.setTitle(title);

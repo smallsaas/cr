@@ -5,31 +5,31 @@
             cr_module.*
         </sql>
     <select id="findModulePage" resultType="ModuleRecord" parameterType="ModuleRecord">
-      SELECT cr_module.*
+        SELECT cr_module.*
         FROM cr_module
         WHERE 1=1
-                                <if test="record.id != null and record.id>0 ">
+        <if test="record.id != null and record.id>0 ">
             AND cr_module.id LIKE CONCAT('%',#{record.id},'%')
-            </if>
-                                    
-                                                                                         <if test="record.projectId != null and record.projectId>0 ">
-            AND cr_module.project_id LIKE CONCAT('%',#{record.projectId},'%')
-            </if>
-                                <if test="record.note != null and record.note!= ''">
-            AND cr_module.note LIKE CONCAT('%',#{record.note},'%')
-            </if>
-                                    
-                                                                                         <if test="record.moduleName != null and record.moduleName!= ''">
-            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
-            </if>
-                                    
-                                                                                         <if test="record.createTime != null and record.createTime>0 ">
-            AND cr_module.create_time LIKE CONCAT('%',#{record.createTime},'%')
-            </if>
-                        <!--
-        <if test="path != null and path != ''">
-            OR cr_module.name LIKE CONCAT('%',#{path},'%')
         </if>
-        -->
+
+        <if test="record.projectId != null and record.projectId>0 ">
+            AND cr_module.project_id LIKE CONCAT('%',#{record.projectId},'%')
+        </if>
+        <if test="record.note != null and record.note!= ''">
+            AND cr_module.note LIKE CONCAT('%',#{record.note},'%')
+        </if>
+
+        <if test="record.moduleName != null and record.moduleName!= ''">
+            AND cr_module.module_name LIKE CONCAT('%',#{record.moduleName},'%')
+        </if>
+
+        <if test="record.createTime != null and record.createTime>0 ">
+            AND cr_module.create_time LIKE CONCAT('%',#{record.createTime},'%')
+        </if>
+        <!--
+<if test="path != null and path != ''">
+OR cr_module.name LIKE CONCAT('%',#{path},'%')
+</if>
+-->
     </select>
 </mapper>
