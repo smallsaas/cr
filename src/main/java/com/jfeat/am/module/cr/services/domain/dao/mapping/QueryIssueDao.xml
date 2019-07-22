@@ -59,7 +59,11 @@
     <!--所有的ISSUE，通过 ISSUE 的任何一个字段来索引-->
     <select id="findIssuePage" resultType="IssueRecord" parameterType="IssueRecord">
         SELECT cr_issue.*,
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName,
 
+    <!--t_sys_org.name as orgName,-->
+    <!--t_sys_user.account as ownerName-->
         (
         SELECT
         count(*)
@@ -67,13 +71,7 @@
         cr_issue_note
         WHERE
         cr_issue.id = cr_issue_note.issue_id
-        ) AS replyNum,
-
-
-        cr_module.module_name as moduleName,
-        cr_project.project_name as projectName,
-    <!--t_sys_org.name as orgName,-->
-    <!--t_sys_user.account as ownerName-->
+        ) AS replyNum
     from cr_issue
     <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
     <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
@@ -87,10 +85,10 @@
 <!-- 单个项目的 ISSUE列表  参数为 项目的ID-->
     <select id="projectIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
-        cr_issue.*,
-        cr_module.module_name as moduleName,
     <!--t_sys_org.name as orgName,-->
-    <!--t_sys_user.account as ownerName-->
+    <!--t_sys_user.account as ownerName,-->
+        cr_issue.*,
+        cr_module.module_name as moduleName
     from cr_issue
     <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
     <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
@@ -106,10 +104,10 @@
     <select id="moduleIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
         cr_issue.*,
-        cr_module.module_name as moduleName,
-        cr_project.project_name as projectName,
     <!--t_sys_org.name as orgName,-->
-    <!--t_sys_user.account as ownerName-->
+    <!--t_sys_user.account as ownerName,-->
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName
     from cr_issue
     <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
     <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
@@ -125,10 +123,10 @@
     <select id="orgIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
         cr_issue.*,
-        cr_module.module_name as moduleName,
-        cr_project.project_name as projectName,
     <!--t_sys_org.name as orgName,-->
-    <!--t_sys_user.account as ownerName-->
+    <!--t_sys_user.account as ownerName,-->
+        cr_module.module_name as moduleName,
+        cr_project.project_name as projectName
     from cr_issue
     <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
     <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
@@ -143,10 +141,10 @@
     <select id="orgAndKidsIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
         cr_issue.*,
+        <!--t_sys_user.account as ownerName,-->
         cr_module.module_name as moduleName,
         cr_project.project_name as projectName,
-        children.name as orgName,
-    <!--t_sys_user.account as ownerName-->
+        children.name as orgName
     from cr_issue
     <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
     LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
@@ -178,10 +176,10 @@ cr_issue.priority DESC,cr_issue.create_time DESC
     <select id="kidsIssueDetails" resultType="com.jfeat.am.module.cr.services.domain.model.IssueRecord">
         SELECT
         cr_issue.*,
+        <!--t_sys_user.account as ownerName,-->
         cr_module.module_name as moduleName,
         cr_project.project_name as projectName,
-        children.name as orgName,
-    <!--t_sys_user.account as ownerName-->
+        children.name as orgName
     from cr_issue
     <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
     LEFT JOIN cr_module on cr_module.id = cr_issue.module_id
@@ -238,10 +236,11 @@ cr_issue.priority DESC,cr_issue.create_time DESC
     </resultMap>
     <select id="issueDetails" resultMap="IssueModel" parameterType="long">
         SELECT cr_issue.*,
+        <!--t_sys_org.name as orgName,-->
+        <!--t_sys_user.account as ownerName,-->
         cr_module.module_name as moduleName,
-        cr_project.project_name as projectName,
-    <!--t_sys_org.name as orgName,-->
-    <!--t_sys_user.account as ownerName-->
+        cr_project.project_name as projectName
+
     FROM cr_issue
         <!--left join t_sys_user on t_sys_user.id = cr_issue.owner_id-->
         <!--left join t_sys_org on t_sys_org.id = cr_issue.org_id-->
