@@ -68,12 +68,12 @@ mybatis-plus:
 
 github:
   client:
-    clientId: 5c7b966fb08be65d3d03
-    clientSecret: 59dad66564f2bdb6ddb9796b8722fed33021ab4e
+    clientId: 85a1c691b01e695e906d
+    clientSecret: bd6f89d0609000012a5c07978d49c7b70956ff14
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
-    authSuccessUrl: http://192.168.2.106:8007/#/
-    authFailureUrl: http://192.168.2.106:8007/#/register
+    authSuccessUrl: http://192.168.3.28:3001/#/
+    authFailureUrl: http://192.168.3.28:3001/#/register
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://api.github.com/user
@@ -81,7 +81,7 @@ github:
 etcd:
   etcdEndpoints: http://192.168.3.28:2379
   serviceName: cr-sys
-  serviceEndpoint: http://127.0.0.1:8081
+  serviceEndpoint: http://192.168.3.28:8086
   provideService: false
   subscribeServices: uaas
 ---
