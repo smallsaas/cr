@@ -21,7 +21,7 @@ jwt:
 
 ###################  项目启动端口  ###################
 server:
-  port: 8080
+  port: 8081
 
 ###################  beetl配置  ###################
 beetl:
@@ -68,20 +68,20 @@ mybatis-plus:
 
 github:
   client:
-    clientId: 85a1c691b01e695e906d
-    clientSecret: bd6f89d0609000012a5c07978d49c7b70956ff14
+    clientId: a50d54b76770a9baeab6
+    clientSecret: acc77bf7824f9b618e963da04b7addc683c50a7f
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
-    authSuccessUrl: http://192.168.3.28:3001/#/
-    authFailureUrl: http://192.168.3.28:3001/#/register
+    authSuccessUrl: http://127.0.0.1:8081/#/
+    authFailureUrl: http://127.0.0.1:8081/#/register
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://api.github.com/user
 
 etcd:
-  etcdEndpoints: http://192.168.3.28:2379
+  etcdEndpoints: http://127.0.0.1:2379
   serviceName: cr-sys
-  serviceEndpoint: http://192.168.3.28:8086
+  serviceEndpoint: http://127.0.0.1:8081
   provideService: false
   subscribeServices: uaas
 ---
@@ -92,9 +92,9 @@ etcd:
 spring:
   profiles: dev
   datasource:
-      url: jdbc:mysql://192.168.3.28:3306/crsys?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      url: jdbc:mysql://115.231.156.18:3306/crsys?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
       username: root
-      password: root
+      password: my-secret-pw
       filters: log4j,wall,mergeStat
       initialize: false
       schema: classpath*:sql/**/*-schema.sql
