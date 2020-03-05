@@ -53,7 +53,7 @@ export default {
   effects: {
 
     *getPermission({ payload },{ call,put }) {
-      const result = yield call(query,'http://192.168.3.28:8088/api/sys/users/perm/groups/mine')
+      const result = yield call(query,'http://127.0.0.1:8081/api/sys/users/perm/groups/mine')
       window.localStorage.permission = JSON.stringify(result.data);
     },
 

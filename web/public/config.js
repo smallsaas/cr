@@ -3,5 +3,5 @@ if(!window.MC){
   window.MC = {};
 }
 
-window.MC.HOST = 'http://192.168.3.28:8086';
+window.MC.HOST = 'http://127.0.0.1:8081';   //CR后台
 window.MC.HASH = '#'

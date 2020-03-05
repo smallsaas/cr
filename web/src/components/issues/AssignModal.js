@@ -36,6 +36,7 @@ const formItemLayout = {
     const { selectRow } = this.state
     validateFields((errors) => {
       if (errors) {
+        console.log("errors");
         return;
       }
       const data = {
@@ -64,7 +65,7 @@ const formItemLayout = {
     const selectionProps = {
       isButton: true,
       method:query,
-      apiUrl: 'http://192.168.2.122:8088/api/adm/users',
+      apiUrl: 'http://127.0.0.1:8081/api/adm/users',
       modalTitle: '指派人列表',
       columns:[
         {

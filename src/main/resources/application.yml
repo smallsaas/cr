@@ -79,9 +79,9 @@ github:
     userInfoUri: https://api.github.com/user
 
 etcd:
-  etcdEndpoints: http://127.0.0.1:2379
+  etcdEndpoints: http://120.79.77.207:2379
   serviceName: cr-sys
-  serviceEndpoint: http://127.0.0.1:8081
+  serviceEndpoint: http://127.0.0.1:8080
   provideService: false
   subscribeServices: uaas
 ---
@@ -92,9 +92,9 @@ etcd:
 spring:
   profiles: dev
   datasource:
-      url: jdbc:mysql://115.231.156.18:3306/crsys?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
+      url: jdbc:mysql://localhost:3307/cr?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
       username: root
-      password: my-secret-pw
+      password: password
       filters: log4j,wall,mergeStat
       initialize: false
       schema: classpath*:sql/**/*-schema.sql
