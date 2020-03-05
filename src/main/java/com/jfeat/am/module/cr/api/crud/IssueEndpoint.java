@@ -87,6 +87,7 @@ public class IssueEndpoint{
     @Permission(CrPermission.ISSUE_EDIT)
     public Tip updateIssue(@PathVariable Long id, @RequestBody Issue entity) {
         entity.setId(id);
+        entity.setOrgId(JWTKit.getOrgId());
         IssueFilter filter = new IssueFilter();
         filter.ignore(false);
         Issue issue = issueService.retrieveMaster(id);
