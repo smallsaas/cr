@@ -109,7 +109,7 @@ public class IssueEndpoint{
         return SuccessTip.create(issueService.deleteMaster(id));
     }
 
-    @BusinessLog(name = "Issue", value = "delete Issue")
+    @BusinessLog(name = "Issue", value = "查询 Issue 列表")
     @ApiOperation(value = "Issue 列表信息", response = IssueRecord.class)
     @GetMapping
     @Permission(CrPermission.ISSUE_VIEW)
